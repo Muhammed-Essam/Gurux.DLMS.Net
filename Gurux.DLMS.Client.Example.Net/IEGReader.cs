@@ -5,6 +5,7 @@ using Gurux.Net;
 using System.Threading;
 using Gurux.DLMS.Enums;
 using Gurux.DLMS.Objects;
+using Gurux.DLMS.Client.Example.Net.Properties;
 using System.Linq;
 using System.Text;
 using Gurux.DLMS.Reader;
@@ -25,6 +26,7 @@ namespace Gurux.DLMS.Client.Example.Net
         public IEGReader()
         {
 
+            var myIcon = Resource1.JICAXMLFilePath;
             ////////////////////////////////////////
             //Handle command line parameters.
             String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
@@ -32,7 +34,7 @@ namespace Gurux.DLMS.Client.Example.Net
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
-            settings.outputFile = @"JICA_Classes.xml";
+            settings.outputFile = myIcon;
 
 
             reader = new Reader.GXDLMSReader(settings.client, settings.media, settings.trace, settings.invocationCounter);
