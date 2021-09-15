@@ -32,7 +32,7 @@ namespace Gurux.DLMS.Client.Example.Net
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
-            settings.outputFile = "Simulated Yoda.xml";
+            settings.outputFile = @"JICA_Classes.xml";
 
 
             reader = new Reader.GXDLMSReader(settings.client, settings.media, settings.trace, settings.invocationCounter);
