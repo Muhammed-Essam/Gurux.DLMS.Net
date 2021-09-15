@@ -27,12 +27,12 @@ namespace Gurux.DLMS.Client.Example.Net
 
             ////////////////////////////////////////
             //Handle command line parameters.
-            String[] argsE = { "-S", "COM5:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
+            String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
             int ret = Settings.GetParameters(argsE, settings);
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
-            settings.outputFile = "C:/Users/moesam/Desktop/Simulated Yoda.xml";
+            settings.outputFile = "Simulated Yoda.xml";
 
 
             reader = new Reader.GXDLMSReader(settings.client, settings.media, settings.trace, settings.invocationCounter);

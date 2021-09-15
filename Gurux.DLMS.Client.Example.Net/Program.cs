@@ -198,10 +198,13 @@ namespace Gurux.DLMS.Client.Example.Net
         {
             IEGReader eGReader =  MeterReader.Intializer();
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            object var1 = MeterReader.Reader(eGReader);
+            object Voltage = MeterReader.Voltage(eGReader);
+            object Credit = MeterReader.Credit(eGReader);
+            object Power = MeterReader.Power(eGReader);
+
             watch.Stop();
 
-            Console.WriteLine(var1);
+            Console.WriteLine(Voltage,Credit,Power);
             Console.WriteLine(watch.ElapsedMilliseconds);
 
             Console.ReadKey();

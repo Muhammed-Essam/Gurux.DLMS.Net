@@ -24,6 +24,22 @@ namespace Gurux.DLMS.Client.Example.Net
 
         }
 
+        public static object Power(IEGReader eGReader)
+        {
+            object val = eGReader.Read_Object("1.0.1.9.0.255", 3);
+            return val;
+
+        }
+
+        public static object Credit(IEGReader eGReader)
+        {
+            object val = eGReader.Read_Object("0.0.19.10.0.255", 2);
+            return val;
+
+        }
+
+        
+
         public static void Closer(IEGReader eGReader)
         {
             eGReader.Close_Connection();
