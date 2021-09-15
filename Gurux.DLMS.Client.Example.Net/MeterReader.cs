@@ -26,7 +26,7 @@ namespace Gurux.DLMS.Client.Example.Net
 
         public static object Power(IEGReader eGReader)
         {
-            object val = eGReader.Read_Object("1.0.1.9.0.255", 3);
+            object val = eGReader.Read_Object("1.0.1.9.0.255", 2);
             return val;
 
         }

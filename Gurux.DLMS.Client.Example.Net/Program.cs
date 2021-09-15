@@ -204,12 +204,12 @@ namespace Gurux.DLMS.Client.Example.Net
 
             watch.Stop();
 
-            Console.WriteLine(Voltage,Credit,Power);
+            Console.WriteLine("Vatage: "+Voltage+" Credit: "+Credit+" Power: "+Power);
             Console.WriteLine(watch.ElapsedMilliseconds);
 
-            Console.ReadKey();
+            //
 
-            MeterReader.Closer(eGReader);
+            MeterReader.Closer(eGReader);Console.ReadKey();
         }
 
         
