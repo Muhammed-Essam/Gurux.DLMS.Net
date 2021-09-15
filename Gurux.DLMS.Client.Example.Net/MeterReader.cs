@@ -17,10 +17,10 @@ namespace Gurux.DLMS.Client.Example.Net
             return eGReader;
         }
 
-        public static double Reader(IEGReader eGReader)
+        public static object Voltage(IEGReader eGReader)
         {
             object val = eGReader.Read_Object("1.0.32.7.0.255", 2);
-            return (double)val;
+            return val;
 
         }
 
