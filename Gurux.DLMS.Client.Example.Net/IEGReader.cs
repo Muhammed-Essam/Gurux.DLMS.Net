@@ -13,8 +13,8 @@ namespace Gurux.DLMS.Client.Example.Net
 {
     public class IEGReader
     {
-        Settings settings = new Settings();
-        Reader.GXDLMSReader reader = null;
+        public Settings settings = new Settings();
+        public Reader.GXDLMSReader reader = null;
 
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Gurux.DLMS.Client.Example.Net
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
-            settings.outputFile = myIcon;
+            settings.outputFile = "D:/Iskra/Projects/Smart Meter Reader/Gurux.DLMS.Client.Example.Net/JICA_Classes.xml";
 
 
             reader = new Reader.GXDLMSReader(settings.client, settings.media, settings.trace, settings.invocationCounter);
@@ -79,31 +79,17 @@ namespace Gurux.DLMS.Client.Example.Net
         public void Initialize_Connection() { reader.InitializeConnection_Edited(); }
         
         public object Read_Object(String Cosem_Object, int Att_Index)
-        {  
-            
-            object val = reader.Read_Edited(settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object), Att_Index);
+        {
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object);
+
+
+            object val = reader.Read_Edited(myobject, Att_Index);
+
+            myobject = settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object);
+
             return val;
         }
 
-        public void Write_Object(String OBIS, int position)
-        {
-
-            /*
-            Objects.GXDLMSData prt = new Objects.GXDLMSData(OBIS);
-
-            prt.SetDataType(position, DataType.Int32);
-
-            prt.Value = 14;
-            
-            reader.Write(prt, position);
-            */
-
-    
-            GXDLMSObject it = new GXDLMSObject();
-            it.LogicalName = "0.0.19.50.2.255";
-            reader.Write(it, 2);
-
-        }
         public void Close_Connection()
         {
             reader.Close_Edited();

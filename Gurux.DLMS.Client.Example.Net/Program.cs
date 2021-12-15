@@ -196,29 +196,57 @@ namespace Gurux.DLMS.Client.Example.Net
         
         static void Main()
         {
-            
             IEGReader eGReader =  MeterReader.Intializer();
-            object Voltage = MeterReader.Voltage(eGReader);
-            object Credit = MeterReader.Credit(eGReader);
-            object Power = MeterReader.Power(eGReader);
-           
-            try
-            {
-                MeterReader.Write_object(eGReader, "0.0.19.50.2.255", 2);
-            }
-            catch (Exception)
-            {
-                MeterReader.Closer(eGReader);
-            }
-            
-            Console.WriteLine("Vatage: "+Voltage+" Credit: "+Credit+" Power: "+Power);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            /* object Voltage = MeterReader.Voltage(eGReader);
+             object Credit = MeterReader.Credit(eGReader);
+             object Power = MeterReader.Power(eGReader);
+ */
+            //MeterReader.Write_Credit(eGReader);
+            watch.Stop();
+
+            /*Console.WriteLine("Vatage: "+Voltage+" Credit: "+Credit+" Power: "+Power);
+            Console.WriteLine(watch.ElapsedMilliseconds);*/
+
+            //
+            // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
 
 
+            MeterReader.WriteBacklight(eGReader,10);
+
+            //MeterReader.BreakerDisconnect(eGReader);
+            // MeterReader.ChargeCredit(eGReader,9876);
+
+            //MeterReader.NonDisconnectPeriod(eGReader,false);
+            //obj.DayOfWeek = ""
+
+            //eGReader.Write_Object("0.0.1.0.0.255", 2, eGReader);
+            // obj = eGReader.Read_Object("0.0.1.0.0.255", 2);
+
+            //   ValueEventArgs e = new ValueEventArgs(obj, 2, 0, null);
+            //e.setValue(Util.hex2ByteArray("07E307130507000015FF8880"));
+            //obj.setValue(null, e);
+
+            /*  Console.WriteLine("Press ESC to stop");*/
+            /* do
+               {
+                   while (!Console.KeyAvailable)
+                   {
+                       Console.Clear();
+                       object Credit = MeterReader.Credit(eGReader);
+                       object Power = MeterReader.Power(eGReader);
+                       Console.WriteLine("Power: " + Power + " \nCredit: " + Credit );
+                       System.Threading.Thread.Sleep(5000);
+                   }
+               } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+
+               Console.ReadKey();*/
             MeterReader.Closer(eGReader);
-            Console.ReadKey();
         }
 
-        
-        
-    }
+       
+
+
+
+}
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Gurux.DLMS.Client;
+using Gurux.DLMS.Objects;
 
 namespace Gurux.DLMS.Client.Example.Net
 {
@@ -17,37 +19,77 @@ namespace Gurux.DLMS.Client.Example.Net
             return eGReader;
         }
 
-        public static object Voltage(IEGReader eGReader)
+        public static double Voltage(IEGReader eGReader)
         {
             object val = eGReader.Read_Object("1.0.32.7.0.255", 2);
-            return val;
+            return (double)val;
 
         }
 
-        public static object Power(IEGReader eGReader)
+        public static uint Power(IEGReader eGReader)
         {
             object val = eGReader.Read_Object("1.0.1.9.0.255", 2);
-            return val;
+            return (uint)val;
 
         }
 
-        public static object Credit(IEGReader eGReader)
+        public static int Credit(IEGReader eGReader)
         {
             object val = eGReader.Read_Object("0.0.19.10.0.255", 2);
-            return val;
+            return (int)val;
 
         }
 
-        public static void Write_object(IEGReader eGReader,String OBIS, int Index)
+        public static void Write_Credit(IEGReader eGReader)
         {
-            eGReader.Write_Object(OBIS, Index);
+           // eGReader.Write_Object("0.0.19.10.0.255", 2, eGReader);
+            
         }
+
+        
 
         public static void Closer(IEGReader eGReader)
         {
             eGReader.Close_Connection();
         }
 
-        
+        public static void BreakerDisconnect(IEGReader eGReader)
+        {
+            eGReader.BreakerDisconnect();
+        }
+
+        public static void ChargeCredit(IEGReader eGReader, int value)
+        {
+            eGReader.ChargeCredit(value);
+        }
+
+        public static void NonDisconnectPeriod(IEGReader eGReader, Boolean enable)
+        {
+            eGReader.NonDisconnectPeriod(enable);
+        }
+
+        public static void WriteBacklight(IEGReader eGReader, UInt16 value)
+        {
+            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255", 2);
+
+            eGReader.UpdateValue(myobject, 2, value);
+
+            eGReader.Write_Object(myobject, 2, eGReader);
+        }
+
+
+        public static void ReadBacklight(IEGReader eGReader)
+        {
+            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255", 2);
+
+
+
+          
+
+            //return (int)val;
+
+        }
+
+
     }
 }

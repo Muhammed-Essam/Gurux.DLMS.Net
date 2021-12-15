@@ -61,7 +61,7 @@ namespace Gurux.DLMS.Client.Example.Net.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to C:/Users/moesam/Desktop/JICA.xml.
+        ///   Looks up a localized string similar to ../../JICA_Classes.xml.
         /// </summary>
         internal static string JICAXMLFilePath {
             get {
