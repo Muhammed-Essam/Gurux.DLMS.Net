@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="JICAXMLFilePath" xml:space="preserve">
-    <value>"C:\\Users\\moesam\\source\\repos\\Muhammed-Essam\\Gurux.DLMS.Net\\Gurux.DLMS.Client.Example.Net\\JICA_Classes.xml"</value>
+    <value>C:/Users/moesam/Desktop/JICA.xml</value>
   </data>
 </root>

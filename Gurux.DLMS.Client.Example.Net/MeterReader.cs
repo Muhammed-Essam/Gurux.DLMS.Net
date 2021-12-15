@@ -38,7 +38,10 @@ namespace Gurux.DLMS.Client.Example.Net
 
         }
 
-        
+        public static void Write_object(IEGReader eGReader,String OBIS, int Index)
+        {
+            eGReader.Write_Object(OBIS, Index);
+        }
 
         public static void Closer(IEGReader eGReader)
         {

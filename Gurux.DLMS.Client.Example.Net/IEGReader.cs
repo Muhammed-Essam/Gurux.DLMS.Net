@@ -7,7 +7,6 @@ using Gurux.DLMS.Enums;
 using Gurux.DLMS.Objects;
 using Gurux.DLMS.Client.Example.Net.Properties;
 using System.Linq;
-using System.Text;
 using Gurux.DLMS.Reader;
 
 namespace Gurux.DLMS.Client.Example.Net
@@ -29,7 +28,7 @@ namespace Gurux.DLMS.Client.Example.Net
             var myIcon = Resource1.JICAXMLFilePath;
             ////////////////////////////////////////
             //Handle command line parameters.
-            String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
+            String[] argsE = { "-S", "COM5:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
             int ret = Settings.GetParameters(argsE, settings);
 
             ////////////////////////////////////////
@@ -60,7 +59,9 @@ namespace Gurux.DLMS.Client.Example.Net
                 try
                 {
                     settings.client.Objects.Clear();
+
                     settings.client.Objects.AddRange(GXDLMSObjectCollection.Load(settings.outputFile));
+
                 }
                 catch (Exception ex)
                 {
@@ -84,6 +85,25 @@ namespace Gurux.DLMS.Client.Example.Net
             return val;
         }
 
+        public void Write_Object(String OBIS, int position)
+        {
+
+            /*
+            Objects.GXDLMSData prt = new Objects.GXDLMSData(OBIS);
+
+            prt.SetDataType(position, DataType.Int32);
+
+            prt.Value = 14;
+            
+            reader.Write(prt, position);
+            */
+
+    
+            GXDLMSObject it = new GXDLMSObject();
+            it.LogicalName = "0.0.19.50.2.255";
+            reader.Write(it, 2);
+
+        }
         public void Close_Connection()
         {
             reader.Close_Edited();
