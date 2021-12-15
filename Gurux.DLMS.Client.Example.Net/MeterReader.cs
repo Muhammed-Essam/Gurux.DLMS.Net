@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Gurux.DLMS.Client;
+using Gurux.DLMS.Objects;
 
 namespace Gurux.DLMS.Client.Example.Net
 {
@@ -38,6 +40,12 @@ namespace Gurux.DLMS.Client.Example.Net
 
         }
 
+        public static void Write_Credit(IEGReader eGReader)
+        {
+           // eGReader.Write_Object("0.0.19.10.0.255", 2, eGReader);
+            
+        }
+
         
 
         public static void Closer(IEGReader eGReader)
@@ -45,6 +53,43 @@ namespace Gurux.DLMS.Client.Example.Net
             eGReader.Close_Connection();
         }
 
-        
+        public static void BreakerDisconnect(IEGReader eGReader)
+        {
+            eGReader.BreakerDisconnect();
+        }
+
+        public static void ChargeCredit(IEGReader eGReader, int value)
+        {
+            eGReader.ChargeCredit(value);
+        }
+
+        public static void NonDisconnectPeriod(IEGReader eGReader, Boolean enable)
+        {
+            eGReader.NonDisconnectPeriod(enable);
+        }
+
+        public static void WriteBacklight(IEGReader eGReader, UInt16 value)
+        {
+            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255", 2);
+
+            eGReader.UpdateValue(myobject, 2, value);
+
+            eGReader.Write_Object(myobject, 2, eGReader);
+        }
+
+
+        public static void ReadBacklight(IEGReader eGReader)
+        {
+            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255", 2);
+
+
+
+          
+
+            //return (int)val;
+
+        }
+
+
     }
 }

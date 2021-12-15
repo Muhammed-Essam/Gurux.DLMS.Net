@@ -62,7 +62,7 @@ namespace Gurux.DLMS.Reader
         public int RetryCount = 3;
         IGXMedia Media;
         TraceLevel Trace;
-        GXDLMSSecureClient Client;
+        public GXDLMSSecureClient Client;
         // Invocation counter (frame counter).
         string InvocationCounter = null;
 
@@ -1871,6 +1871,42 @@ namespace Gurux.DLMS.Reader
             }
             return Client.UpdateValue(it, attributeIndex, reply.Value);
         }
+
+        public void BreakerDisconnect()
+        {
+            GXReplyData reply = new GXReplyData();
+            GXDLMSDisconnectControl d = new GXDLMSDisconnectControl();
+            ReadDataBlock(d.RemoteDisconnect(Client), reply);
+        }
+
+
+        public object SetValue(GXDLMSObject it, int attributeIndex, object value)
+        {
+
+            return Client.UpdateValue(it, attributeIndex, value);
+        }
+
+        public void ChargeCredit(int value)
+        {
+            GXReplyData reply = new GXReplyData();
+            GXDLMSCredit d = new GXDLMSCredit();
+            ReadDataBlock(d.SetAmountToValue(Client,value), reply);
+        }
+
+        public void ExecuteScript(String COSEM, int ScriptID)
+        {
+            GXReplyData reply = new GXReplyData();
+            GXDLMSScriptTable ScriptTable = new GXDLMSScriptTable(COSEM);
+            GXDLMSScript script = new GXDLMSScript();
+            script.Id = ScriptID;
+            
+
+            
+            ReadDataBlock(ScriptTable.Execute(Client, script), reply);
+        }
+
+
+
         public object Read(GXDLMSObject it, int attributeIndex)
         {
             GXReplyData reply = new GXReplyData();
@@ -1946,6 +1982,12 @@ namespace Gurux.DLMS.Reader
         {
             GXReplyData reply = new GXReplyData();
             ReadDataBlock(Client.Write(it, attributeIndex), reply);
+        }
+
+        public void WriteValue(String it, int attributeIndex, String Value)
+        {
+            GXReplyData reply = new GXReplyData();
+            ReadDataBlock(Client.Write( it,  Value, DataType.UInt16, ObjectType.Credit, 2), reply);
         }
 
         /// <summary>
@@ -2134,5 +2176,8 @@ namespace Gurux.DLMS.Reader
                 Client.ParseAccessResponse(list, reply.Data);
             }
         }
+
+
+    
     }
 }
