@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Register_Class.cs" />
     <Compile Include="Credit.cs" />
     <Compile Include="GXDLMSReader.cs" />
     <Compile Include="IEGReader.cs" />

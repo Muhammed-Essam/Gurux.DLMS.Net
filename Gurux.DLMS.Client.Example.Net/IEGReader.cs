@@ -29,12 +29,12 @@ namespace Gurux.DLMS.Client.Example.Net
             var myIcon = Resource1.JICAXMLFilePath;
             ////////////////////////////////////////
             //Handle command line parameters.
-            String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
+            String[] argsE = { "-S", "COM5:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
             int ret = Settings.GetParameters(argsE, settings);
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
-            settings.outputFile = "D:/Iskra/Projects/Smart Meter Reader/Gurux.DLMS.Client.Example.Net/JICA_Classes.xml";
+            settings.outputFile = Resource1.JICAXMLFilePath;
 
 
             reader = new Reader.GXDLMSReader(settings.client, settings.media, settings.trace, settings.invocationCounter);
@@ -71,52 +71,71 @@ namespace Gurux.DLMS.Client.Example.Net
                     }
                 }
             }
-
-
         }
 
-        public void Initialize_Connection() { reader.InitializeConnection_Edited(); }
+        public void Initialize_Connection() 
+        { 
+            reader.InitializeConnection_Edited(); 
+        }
         
-        public object Read_Object(String Cosem_Object, int Att_Index)
+        /// <summary>
+        /// Reading a Val from an object by COSEM Logical Name (LN)
+        /// </summary>
+        /// <param name="OBIS_Code_LN">Logical name (LN) (Full) seperated by dots (.) OBIS Code like 1.1.1.1.255</param>
+        /// <param name="Att_Index">The attribute idex to read from the OBIS Code</param>
+        /// <returns>attribute value in format of object(general format)</returns>
+        public object Read_Object_Attribute(String OBIS_Code_LN, int Att_Index)
         {
-            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object);
-
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
 
             object val = reader.Read_Edited(myobject, Att_Index);
-
-            myobject = settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object);
 
             return val;
         }
 
-        public GXDLMSObject Read_ObjectSelf(String Cosem_Object, int Att_Index)
+        /// <summary>
+        /// return the COSEM object refeernce by the OBIS CODE
+        /// </summary>
+        /// <param name="OBIS_Code_LN">Logical name (LN) (Full) seperated by dots (.) OBIS Code like 1.1.1.1.255</param>
+        /// <returns>COSEM Object</returns>
+        public GXDLMSObject Read_ObjectSelf(String OBIS_Code_LN)
         {
-            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object);
-
-            //myobject.SetAccess(2, Gurux.DLMS.Enums.AccessMode.ReadWrite);
-            //myobject.SetAccess3(2, Gurux.DLMS.Enums.AccessMode3.Read | Gurux.DLMS.Enums.AccessMode3.Write);
-
-
-            object val = reader.Read_Edited(myobject, Att_Index);
-
-            myobject = settings.client.Objects.FindByLN(ObjectType.None, Cosem_Object);
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
 
             return myobject;
         }
 
-        public void UpdateValue(GXDLMSObject Cosem_Object, int Att_Index, object value)
+        /// <summary>
+        /// update attribute value on a COSEM object by OBIS LN 
+        /// </summary>
+        /// <param name="OBIS_Code_LN">Logical name (LN) (Full) seperated by dots (.) OBIS Code like 1.1.1.1.255</param>
+        /// <param name="Att_Index">attribute index</param>
+        /// <param name="value">value to be set</param>
+        public void Write_Value_Object_Attribute(String OBIS_Code_LN, int Att_Index, object value)
         {
-            reader.SetValue(Cosem_Object, Att_Index, value);
+            GXDLMSObject _ = Read_ObjectSelf(OBIS_Code_LN);
+            reader.SetValue(_ ,Att_Index, value);
+            Write_Object_On_Meter(_ , Att_Index);
         }
 
-
-
-        public void Write_Object(GXDLMSObject Cosem_Object, int Att_Index, IEGReader eGReader)
+        /// <summary>
+        /// Write a object to a meter
+        /// </summary>
+        /// <param name="Cosem_Object"></param>
+        /// <param name="Att_Index"></param>
+        public void Write_Object_On_Meter(GXDLMSObject Cosem_Object, int Att_Index)
         {
-
             reader.Write(Cosem_Object, Att_Index);
+        }
 
-
+        /// <summary>
+        /// Execute Certain script fom script OBIS LN
+        /// </summary>
+        /// <param name="OBIS_Code_LN">Logical name (LN) (Full) seperated by dots (.) OBIS Code like 1.1.1.1.255</param>
+        /// <param name="ScriptID">script ID on the cosem ex: 1</param>
+        public void Execute_Script(String OBIS_Code_LN, int ScriptID)
+        {
+            reader.ExecuteScript(OBIS_Code_LN, ScriptID);
         }
 
         public GXDLMSClient getClient()
@@ -124,7 +143,9 @@ namespace Gurux.DLMS.Client.Example.Net
             return reader.Client;
         }
 
-
+        /// <summary>
+        /// disconnecting breaker 
+        /// </summary>
         public void BreakerDisconnect()
         {
             reader.BreakerDisconnect();
@@ -138,17 +159,10 @@ namespace Gurux.DLMS.Client.Example.Net
 
         public void NonDisconnectPeriod(Boolean enable)
         {
-            String COSEM = "0.0.10.7.0.255";
-            int ScriptID;
-
-
             if (enable)
-                ScriptID = 1;
+                Execute_Script("0.0.10.7.0.255", 1);
             else
-                ScriptID = 2;
-
-
-            reader.ExecuteScript(COSEM, ScriptID);
+                Execute_Script("0.0.10.7.0.255", 2);
         }
         public void Close_Connection()
         {
