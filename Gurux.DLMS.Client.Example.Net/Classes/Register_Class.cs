@@ -33,6 +33,11 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         }
 
     }
+    
+    class Instantanous_L1 : Register_Class
+    {
+        public Instantanous_L1(String OBIS_LN) : base("1.0.31.7.0.255") { }
+    }
 
     
 }

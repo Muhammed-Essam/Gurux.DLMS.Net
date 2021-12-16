@@ -209,7 +209,7 @@ namespace Gurux.DLMS.Client.Example.Net
             //
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
 
-            List<object> o = (List<object>)eGReader.Read_Object_Attribute("1.0.1.7.0.255", 3);
+            Classes.Instantanous_L1 g = new Classes.Instantanous_L1();
             Console.WriteLine((double)o[0]);
             Console.ReadKey();
             //MeterReader.BreakerDisconnect(eGReader);
