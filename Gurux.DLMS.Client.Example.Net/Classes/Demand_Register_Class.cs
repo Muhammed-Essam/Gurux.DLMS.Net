@@ -63,9 +63,9 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         }
     }
 
-    class Demand_register_Active_energy_import_A_Pos : Demand_Register_Class
+    class Active_energy_import_A_Pos : Demand_Register_Class
     {
-        public Demand_register_Active_energy_import_A_Pos(IEGReader eGReader) : base("1.0.1.4.0.255", eGReader) { }
+        public Active_energy_import_A_Pos(IEGReader eGReader) : base("1.0.1.4.0.255", eGReader) { }
     }
 
 
