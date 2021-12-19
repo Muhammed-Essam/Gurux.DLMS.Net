@@ -68,4 +68,39 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         public Active_energy_import_A_Pos(IEGReader eGReader) : base("1.0.1.4.0.255", eGReader) { }
     }
 
+
+    class Demand_register_Active_energy_import_Pos_A : Demand_Register_Class
+    {
+        public Demand_register_Active_energy_import_Pos_A (IEGReader eGReader) : base("1.0.1.4.0.255", eGReader) { }
+    }
+    class Average_import_power_Pos_A : Demand_Register_Class
+    {
+        public Average_import_power_Pos_A(IEGReader eGReader) : base("1.0.1.24.0.255", eGReader) { }
+    }
+    class Demand_register_Active_energy_export_Neg_A : Demand_Register_Class
+    {
+        public Demand_register_Active_energy_export_Neg_A(IEGReader eGReader) : base("1.0.2.4.0.255", eGReader) { }
+    }
+    class Average_export_power_Neg_A : Demand_Register_Class
+    {
+        public Average_export_power_Neg_A(IEGReader eGReader) : base("1.0.2.24.0.255", eGReader) { }
+    }
+    class Demand_register_Active_energy_combined_Abs_Pos_A_Sum_Abs_Neg_A : Demand_Register_Class
+    {
+        public Demand_register_Active_energy_combined_Abs_Pos_A_Sum_Abs_Neg_A(IEGReader eGReader) : base("1.0.15.4.0.255", eGReader) { }
+    }
+    class Average_total_power_Abs_Pos_A_Sum_Abs_Neg_A : Demand_Register_Class
+    {
+        public Average_total_power_Abs_Pos_A_Sum_Abs_Neg_A(IEGReader eGReader) : base("1.0.15.24.0.255", eGReader) { }
+    }
+    class Average_net_power_Abs_Pos_A_Minus_Abs_Neg_A : Demand_Register_Class
+    {
+        public Average_net_power_Abs_Pos_A_Minus_Abs_Neg_A(IEGReader eGReader) : base("1.0.16.24.0.255", eGReader) { }
+    }
+    class Sliding_average_current_L1_for_fuse_supervision : Demand_Register_Class
+    {
+        public Sliding_average_current_L1_for_fuse_supervision(IEGReader eGReader) : base("1.0.31.4.0.255", eGReader) { }
+    }
+
+
 }
