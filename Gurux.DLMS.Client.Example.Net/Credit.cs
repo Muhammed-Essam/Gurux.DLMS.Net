@@ -6,7 +6,7 @@ namespace Gurux.DLMS.Client.Example.Net
 
         public static object Reader(IEGReader eGReader)
         {
-            object val = eGReader.Read_Object("0.0.19.10.0.255", 2);
+            object val = eGReader.Read_Object_Attribute("0.0.19.10.0.255", 2);
             return val;
 
         }

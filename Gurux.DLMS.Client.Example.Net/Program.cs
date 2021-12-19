@@ -197,13 +197,11 @@ namespace Gurux.DLMS.Client.Example.Net
         static void Main()
         {
             IEGReader eGReader =  MeterReader.Intializer();
-            var watch = System.Diagnostics.Stopwatch.StartNew();
             /* object Voltage = MeterReader.Voltage(eGReader);
              object Credit = MeterReader.Credit(eGReader);
              object Power = MeterReader.Power(eGReader);
  */
             //MeterReader.Write_Credit(eGReader);
-            watch.Stop();
 
             /*Console.WriteLine("Vatage: "+Voltage+" Credit: "+Credit+" Power: "+Power);
             Console.WriteLine(watch.ElapsedMilliseconds);*/
@@ -211,9 +209,9 @@ namespace Gurux.DLMS.Client.Example.Net
             //
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
 
-
-            MeterReader.WriteBacklight(eGReader,10);
-
+            Classes.Instantanous_Voltage_L1 o = new Classes.Instantanous_Voltage_L1(eGReader);
+            Console.WriteLine(o.Get_Value());
+            Console.ReadKey();
             //MeterReader.BreakerDisconnect(eGReader);
             // MeterReader.ChargeCredit(eGReader,9876);
 

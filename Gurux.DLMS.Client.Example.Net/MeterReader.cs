@@ -21,32 +21,24 @@ namespace Gurux.DLMS.Client.Example.Net
 
         public static double Voltage(IEGReader eGReader)
         {
-            object val = eGReader.Read_Object("1.0.32.7.0.255", 2);
+            object val = eGReader.Read_Object_Attribute("1.0.32.7.0.255", 2);
             return (double)val;
 
         }
 
         public static uint Power(IEGReader eGReader)
         {
-            object val = eGReader.Read_Object("1.0.1.9.0.255", 2);
+            object val = eGReader.Read_Object_Attribute("1.0.1.9.0.255", 2);
             return (uint)val;
 
         }
 
         public static int Credit(IEGReader eGReader)
         {
-            object val = eGReader.Read_Object("0.0.19.10.0.255", 2);
+            object val = eGReader.Read_Object_Attribute("0.0.19.10.0.255", 2);
             return (int)val;
 
         }
-
-        public static void Write_Credit(IEGReader eGReader)
-        {
-           // eGReader.Write_Object("0.0.19.10.0.255", 2, eGReader);
-            
-        }
-
-        
 
         public static void Closer(IEGReader eGReader)
         {
@@ -70,24 +62,14 @@ namespace Gurux.DLMS.Client.Example.Net
 
         public static void WriteBacklight(IEGReader eGReader, UInt16 value)
         {
-            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255", 2);
-
-            eGReader.UpdateValue(myobject, 2, value);
-
-            eGReader.Write_Object(myobject, 2, eGReader);
+            eGReader.Write_Value_Object_Attribute("0.0.196.1.8.255", 2, value);
         }
 
 
         public static void ReadBacklight(IEGReader eGReader)
         {
-            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255", 2);
-
-
-
-          
-
+            GXDLMSObject myobject = eGReader.Read_ObjectSelf("0.0.196.1.8.255");
             //return (int)val;
-
         }
 
 
