@@ -208,10 +208,19 @@ namespace Gurux.DLMS.Client.Example.Net
 
             //
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
-
-            Classes.Demand_register_Active_energy_import_A_Pos  o = new Classes.Demand_register_Active_energy_import_A_Pos(eGReader);
-            Console.WriteLine(o.Get_Unit());
-            Console.ReadKey();
+            try
+            {
+                Classes.Register_Activation_Energy o = new Classes.Register_Activation_Energy(eGReader);
+                object s = o.Get_Mask_List();
+                Console.WriteLine(s);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.ReadKey();
+                MeterReader.Closer(eGReader);
+            }
             //MeterReader.BreakerDisconnect(eGReader);
             // MeterReader.ChargeCredit(eGReader,9876);
 
