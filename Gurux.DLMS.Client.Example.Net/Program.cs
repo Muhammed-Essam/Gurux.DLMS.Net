@@ -209,8 +209,8 @@ namespace Gurux.DLMS.Client.Example.Net
             //
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
 
-            Classes.Instantanous_Voltage_L1 o = new Classes.Instantanous_Voltage_L1(eGReader);
-            Console.WriteLine(o.Get_Value());
+            Classes.Demand_register_Active_energy_import_A_Pos  o = new Classes.Demand_register_Active_energy_import_A_Pos(eGReader);
+            Console.WriteLine(o.Get_Unit());
             Console.ReadKey();
             //MeterReader.BreakerDisconnect(eGReader);
             // MeterReader.ChargeCredit(eGReader,9876);
