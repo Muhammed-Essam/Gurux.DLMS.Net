@@ -29,7 +29,7 @@ namespace Gurux.DLMS.Client.Example.Net
             var myIcon = Resource1.JICAXMLFilePath;
             ////////////////////////////////////////
             //Handle command line parameters.
-            String[] argsE = { "-S", "COM5:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
+            String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
             int ret = Settings.GetParameters(argsE, settings);
 
             ////////////////////////////////////////
