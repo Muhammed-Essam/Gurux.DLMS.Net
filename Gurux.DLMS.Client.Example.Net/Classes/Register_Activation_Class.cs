@@ -44,4 +44,6 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         public Register_Activation_Energy(IEGReader eGReader) : base("0.0.14.0.1.255", eGReader) { }
     }
 
+
+
 }

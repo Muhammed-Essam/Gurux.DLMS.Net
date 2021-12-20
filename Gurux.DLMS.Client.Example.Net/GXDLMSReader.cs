@@ -1869,6 +1869,10 @@ namespace Gurux.DLMS.Reader
             {
                 it.SetDataType(attributeIndex, reply.DataType);
             }
+            if (reply.Value.GetType() == typeof(GXArray))
+            {
+                return Client.UpdateValue(it, attributeIndex, reply.Value);
+            } 
             return Client.UpdateValue(it, attributeIndex, reply.Value);
         }
 
@@ -1904,8 +1908,6 @@ namespace Gurux.DLMS.Reader
             
             ReadDataBlock(ScriptTable.Execute(Client, script), reply);
         }
-
-
 
         public object Read(GXDLMSObject it, int attributeIndex)
         {

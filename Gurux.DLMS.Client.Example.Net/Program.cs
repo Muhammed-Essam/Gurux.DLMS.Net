@@ -209,11 +209,20 @@ namespace Gurux.DLMS.Client.Example.Net
 
             //
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
+            try
+            {
+                Credit_alarm_event_log myreg = new Credit_alarm_event_log(eGReader);
 
-            Register_Activation_Energy myreg = new Register_Activation_Energy(eGReader);
-           
-            Console.WriteLine(myreg.Get_Mask_List());
-            Console.ReadLine();
+                object s = myreg.Get_Buffer();
+                Console.WriteLine(s);
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.ReadLine();
+                MeterReader.Closer(eGReader);
+            }
             //MeterReader.BreakerDisconnect(eGReader);
             // MeterReader.ChargeCredit(eGReader,9876);
 
