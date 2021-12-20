@@ -39,6 +39,7 @@ using Gurux.Net;
 using Gurux.DLMS.Enums;
 using System.Threading;
 using Gurux.DLMS.Objects;
+using Gurux.DLMS.Client.Example.Net.Classes;
 
 namespace Gurux.DLMS.Client.Example.Net
 {
@@ -209,9 +210,10 @@ namespace Gurux.DLMS.Client.Example.Net
             //
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
 
-            Classes.L1_Voltage2 myreg = new Classes.L1_Voltage2(eGReader);
+            Register_Activation_Energy myreg = new Register_Activation_Energy(eGReader);
            
-            Console.WriteLine(myreg.Get_Value());
+            Console.WriteLine(myreg.Get_Mask_List());
+            Console.ReadLine();
             //MeterReader.BreakerDisconnect(eGReader);
             // MeterReader.ChargeCredit(eGReader,9876);
 
