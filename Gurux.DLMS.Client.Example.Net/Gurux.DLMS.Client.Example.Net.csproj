@@ -90,6 +90,7 @@
     <Compile Include="Classes\Profile_Generic_Class.cs" />
     <Compile Include="Classes\Register_Activation_Class.cs" />
     <Compile Include="Classes\Register_Class.cs" />
+    <Compile Include="Classes\Account_Class.cs" />
     <Compile Include="Credit.cs" />
     <Compile Include="GXDLMSReader.cs" />
     <Compile Include="IEGReader.cs" />
