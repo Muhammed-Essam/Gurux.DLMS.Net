@@ -214,6 +214,7 @@ namespace Gurux.DLMS.Client.Example.Net
                 Credit_alarm_event_log myreg = new Credit_alarm_event_log(eGReader);
 
                 object s = myreg.Get_Buffer();
+                MeterReader.Closer(eGReader);
                 Console.WriteLine(s);
                 Console.ReadLine();
             }

@@ -18,7 +18,10 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public object Get_Buffer()
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 2);
+            object CapturedObjects = Get_Capture_Objects();
+
+            return this.eGReader.Read_Object_Edited(this.OBIS, 2,null);
+          
         }
         
         public object Get_Capture_Objects()

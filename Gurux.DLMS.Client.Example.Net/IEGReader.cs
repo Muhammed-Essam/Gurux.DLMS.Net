@@ -90,6 +90,19 @@ namespace Gurux.DLMS.Client.Example.Net
 
             object val = reader.Read_Edited(myobject, Att_Index);
 
+            
+
+            return val;
+        }
+
+        public object Read_Object_Edited(String OBIS_Code_LN, int Att_Index, object CapturedObjects)
+        {
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
+
+            object val = null;// reader.Read_Edited(myobject, Att_Index);
+
+            reader.GetProfileGenericColumns_By_OBIS(myobject, CapturedObjects);
+
             return val;
         }
 

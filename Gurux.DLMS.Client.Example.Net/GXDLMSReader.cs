@@ -1308,6 +1308,154 @@ namespace Gurux.DLMS.Reader
             }
         }
 
+        public void GetProfileGenericColumns_Edited(GXDLMSObject it)
+        {
+            //Read Profile Generic columns first.
+           
+            try
+            {
+                //If info.
+                if (Trace > TraceLevel.Warning)
+                {
+                    Console.WriteLine(it.LogicalName);
+                }
+                Read(it, 3);
+                //If info.
+                if (Trace > TraceLevel.Warning)
+                {
+                    GXDLMSObject[] cols = (it as GXDLMSProfileGeneric).GetCaptureObject();
+                    StringBuilder sb = new StringBuilder();
+                    bool First = true;
+                    List<GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>> columns = new List<GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>>();
+                    GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject> singleValue = new GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>();
+                    GXDLMSCaptureObject myCaptureObject = new GXDLMSCaptureObject();
+                    foreach (GXDLMSObject col in cols)
+                    {
+                        singleValue.Key = col;
+                        myCaptureObject.AttributeIndex = 2;
+                       // singleValue.Value = 
+                    }
+                    
+                }
+            }
+            catch (Exception)
+            {
+                //Continue reading.
+            }
+            
+        }
+        public void GetProfileGenericColumns_By_OBIS(GXDLMSObject it, object CapturedObjects)
+        {
+           // GetProfileGenericColumns_Edited(it);
+            //Find profile generics register objects and read them.
+
+            //If trace is info.
+            if (Trace > TraceLevel.Warning)
+            {
+                Console.WriteLine("-------- Reading " + it.GetType().Name + " " + it.Name + " " + it.Description);
+            }
+            long entriesInUse = -1;
+            if ((it.GetAccess(7) & AccessMode.Read) != 0)
+            {
+                entriesInUse = Convert.ToInt64(Read(it, 7));
+            }
+            long entries = -1;
+            if ((it.GetAccess(8) & AccessMode.Read) != 0)
+            {
+                entries = Convert.ToInt64(Read(it, 8));
+            }
+            //If trace is info.
+            if (Trace > TraceLevel.Warning)
+            {
+                Console.WriteLine("Entries: " + entriesInUse + "/" + entries);
+            }
+            //If there are no columns or rows.
+            if (entriesInUse == 0 || (it as GXDLMSProfileGeneric).CaptureObjects.Count == 0)
+            {
+                //continue;
+            }
+
+
+
+
+
+            //All meters are not supporting parameterized read.
+            if ((Client.NegotiatedConformance & (Gurux.DLMS.Enums.Conformance.ParameterizedAccess | Gurux.DLMS.Enums.Conformance.SelectiveAccess)) != 0)
+            {
+                try
+                {
+                    //Read first row from Profile Generic.
+                    object[] rows= ReadRowsByEntry(it as GXDLMSProfileGeneric, 1, 1);
+                    
+                    //If trace is info.
+                    if (Trace > TraceLevel.Warning)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (object[] row in rows)
+                        {
+                            foreach (object cell in row)
+                            {
+                                if (cell is byte[])
+                                {
+                                    sb.Append(GXCommon.ToHex((byte[])cell, true));
+                                }
+                                else
+                                {
+                                    sb.Append(Convert.ToString(cell));
+                                }
+                                sb.Append(" | ");
+                            }
+                            sb.Append("\r\n");
+                        }
+                        Console.WriteLine(sb.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error! Failed to read first row: " + ex.Message);
+                    //Continue reading.
+                }
+            }
+            //All meters are not supporting parameterized read.
+            if ((Client.NegotiatedConformance & (Gurux.DLMS.Enums.Conformance.ParameterizedAccess | Gurux.DLMS.Enums.Conformance.SelectiveAccess)) != 0)
+            {
+                try
+                {
+                    //Read last day from Profile Generic.
+
+                    object[] rows = ReadRowsByRange(it as GXDLMSProfileGeneric, DateTime.Now.Date.AddMonths(-3), DateTime.MaxValue);
+                    //If trace is info.
+                    if (Trace > TraceLevel.Warning)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (object[] row in rows)
+                        {
+                            foreach (object cell in row)
+                            {
+                                if (cell is byte[])
+                                {
+                                    sb.Append(GXCommon.ToHex((byte[])cell, true));
+                                }
+                                else
+                                {
+                                    sb.Append(Convert.ToString(cell));
+                                }
+                                sb.Append(" | ");
+                            }
+                            sb.Append("\r\n");
+                        }
+                        Console.WriteLine(sb.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error! Failed to read last day: " + ex.Message);
+                    return;
+                    //Continue reading.
+                }
+            }
+            
+        }
         public void ShowValue(object val, int pos)
         {
             //If trace is info.
@@ -1869,10 +2017,6 @@ namespace Gurux.DLMS.Reader
             {
                 it.SetDataType(attributeIndex, reply.DataType);
             }
-            if (reply.Value.GetType() == typeof(GXArray))
-            {
-                return Client.UpdateValue(it, attributeIndex, reply.Value);
-            } 
             return Client.UpdateValue(it, attributeIndex, reply.Value);
         }
 
@@ -1908,6 +2052,8 @@ namespace Gurux.DLMS.Reader
             
             ReadDataBlock(ScriptTable.Execute(Client, script), reply);
         }
+
+
 
         public object Read(GXDLMSObject it, int attributeIndex)
         {
@@ -2018,6 +2164,20 @@ namespace Gurux.DLMS.Reader
         {
             GXReplyData reply = new GXReplyData();
             ReadDataBlock(Client.ReadRowsByRange(it, start, end), reply);
+
+            
+            return (object[])Client.UpdateValue(it, 2, reply.Value);
+        }
+
+        public object[] ReadRowsByRange_Edited(GXDLMSProfileGeneric it, DateTime start, DateTime end, List<GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>> columns)
+        {
+            GXReplyData reply = new GXReplyData();
+            ReadDataBlock(Client.ReadRowsByRange(it, start, end), reply);
+
+
+
+            Client.UpdateValue(it, 2, reply.Value);
+
             return (object[])Client.UpdateValue(it, 2, reply.Value);
         }
 
