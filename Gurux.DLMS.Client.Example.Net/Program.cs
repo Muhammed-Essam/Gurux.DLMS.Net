@@ -213,9 +213,9 @@ namespace Gurux.DLMS.Client.Example.Net
             {
                 Import_Account myreg = new Import_Account(eGReader);
 
-                object s = myreg.account_mode();
+                GXCurrency s = (GXCurrency)myreg.currency();
                 MeterReader.Closer(eGReader);
-                Console.WriteLine(s);
+                Console.WriteLine(s.);
                 Console.ReadLine();
             }
             catch (Exception ex)

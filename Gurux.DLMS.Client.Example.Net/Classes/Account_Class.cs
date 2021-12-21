@@ -88,14 +88,24 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             return this.eGReader.Read_Object_Attribute(this.OBIS, 14);
         }
 
-        public object currency()
+        public object currency
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 15);
-        }
+            get 
+            {
+                return this.eGReader.Read_Object_Attribute(this.OBIS, 15);
+            }
 
-        public object low_credit_threshold()
+            set
+            {
+                currency = value;
+            }
+        }
+        public object low_credit_threshold
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 16);
+            get
+            {
+                return this.eGReader.Read_Object_Attribute(this.OBIS, 16);
+            }
         }
 
         public object next_credit_available_threshold()
@@ -108,10 +118,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             return this.eGReader.Read_Object_Attribute(this.OBIS, 18);
         }
 
-        public object max_provision_period()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 19);
-        }
+        public object max_provision_period() => this.eGReader.Read_Object_Attribute(this.OBIS, 19);
     }
 
     class Import_Account : Account_Class
