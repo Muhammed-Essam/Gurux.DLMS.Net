@@ -151,6 +151,11 @@ namespace Gurux.DLMS.Client.Example.Net
             reader.ExecuteScript(OBIS_Code_LN, ScriptID);
         }
 
+        public void Execute_Method(byte[][] mymethod, GXReplyData reply)
+        {
+            reader.ReadDataBlock(mymethod, reply); 
+        }
+
         public GXDLMSClient getClient()
         {
             return reader.Client;

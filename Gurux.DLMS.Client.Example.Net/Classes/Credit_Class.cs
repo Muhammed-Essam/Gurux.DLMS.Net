@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gurux.DLMS.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -110,6 +111,18 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
 
         }
+
+
+        public void set_amount_to_value(int value )
+        {
+            GXReplyData reply = new GXReplyData();
+            GXDLMSCredit CreditRegister = new GXDLMSCredit();
+
+            byte[][] mymethod = CreditRegister.SetAmountToValue(this.eGReader.reader.Client,value);
+
+            this.eGReader.Execute_Method(mymethod, reply);
+        }
+
     }
 
     class Import_Credit : Credit_Class

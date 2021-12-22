@@ -212,18 +212,7 @@ namespace Gurux.DLMS.Client.Example.Net
             try
             {
                 Import_Credit myreg = new Import_Credit(eGReader);
-                Console.WriteLine(myreg.credit_available_threshold);
-                Console.WriteLine(myreg.credit_configuration);
-                Console.WriteLine(myreg.credit_status);
-                Console.WriteLine(myreg.credit_type);
-                Console.WriteLine(myreg.Current_Credit_Amount); 
-                Console.WriteLine(myreg.limit);
-                Console.WriteLine(myreg.period);
-                Console.WriteLine(myreg.preset_credit_amount);
-                Console.WriteLine(myreg.priority);
-                Console.WriteLine(myreg.warning_threshold);
-                myreg.limit = 2;
-                Console.WriteLine(myreg.limit);
+                myreg.set_amount_to_value(5284);
                 Console.ReadLine();
             }
             catch (Exception ex)
