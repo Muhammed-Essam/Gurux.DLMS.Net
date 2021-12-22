@@ -125,9 +125,13 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public void set_amount_to_value(int value )
         {
-            this.eGReader.Execute_Method(this.OBIS, 2, value);
+            this.eGReader.Execute_Method(this.OBIS, 2, 2, value);
         }
 
+        public void UpdateAmount(Int32 value)
+        {
+            this.eGReader.Execute_Method(this.OBIS, 1, 2, value);
+        }
     }
 
     class Import_Credit : Credit_Class
