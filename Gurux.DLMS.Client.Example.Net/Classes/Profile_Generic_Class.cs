@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Gurux.DLMS.Objects;
 namespace Gurux.DLMS.Client.Example.Net.Classes
 {
     class Profile_Generic_Class
     {
         string OBIS;
         IEGReader eGReader;
+        GXDLMSProfileGeneric GuruxObject;
 
         public Profile_Generic_Class(string OBIS, IEGReader eGReader)
         {
             this.eGReader = eGReader;
             this.OBIS = OBIS;
+            this.GuruxObject = new GXDLMSProfileGeneric(OBIS);
         }
 
         public object Get_Buffer()
@@ -50,6 +52,13 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         public object Get_Profile_Entries()
         {
             return this.eGReader.Read_Object_Attribute(this.OBIS, 8);
+        }
+
+        public void Reset()
+        {
+            GXReplyData reply = new GXReplyData();
+            byte[][] mymethod = GuruxObject.Reset(this.eGReader.reader.Client);
+            this.eGReader.Execute_Method(mymethod, reply);
         }
     }
 
