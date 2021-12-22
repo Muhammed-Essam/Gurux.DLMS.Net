@@ -123,6 +123,11 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             this.eGReader.Execute_Method(mymethod, reply);
         }
 
+        public void set_amount_to_value_edited(int value )
+        {
+            this.eGReader.Execute_Method_Edited(this.OBIS, 2, Enums.DataType.Int32, value);
+        }
+
     }
 
     class Import_Credit : Credit_Class
