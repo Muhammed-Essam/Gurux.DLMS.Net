@@ -156,6 +156,12 @@ namespace Gurux.DLMS.Client.Example.Net
             reader.ReadDataBlock(mymethod, reply); 
         }
 
+        public void Execute_Method_Edited(String OBIS_Code_LN, int Att_Index, DataType dataType, object value)
+        {
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
+            reader.Method(myobject, Att_Index, value, dataType);
+        }
+
         public GXDLMSClient getClient()
         {
             return reader.Client;

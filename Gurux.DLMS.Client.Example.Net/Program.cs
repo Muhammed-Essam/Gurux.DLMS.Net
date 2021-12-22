@@ -212,7 +212,7 @@ namespace Gurux.DLMS.Client.Example.Net
             try
             {
                 Import_Credit myreg = new Import_Credit(eGReader);
-                myreg.set_amount_to_value(5284);
+                myreg.set_amount_to_value_edited(785);
                 Console.ReadLine();
             }
             catch (Exception ex)
