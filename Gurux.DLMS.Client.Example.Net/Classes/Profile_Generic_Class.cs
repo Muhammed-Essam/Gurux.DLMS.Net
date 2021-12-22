@@ -58,7 +58,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         {
             GXReplyData reply = new GXReplyData();
             byte[][] mymethod = GuruxObject.Reset(this.eGReader.reader.Client);
-            this.eGReader.Execute_Method(mymethod, reply);
+            this.eGReader.Execute_Method_Edited(mymethod, reply);
         }
     }
 

@@ -211,8 +211,8 @@ namespace Gurux.DLMS.Client.Example.Net
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
             try
             {
-                Standard_event_log myreg = new Standard_event_log(eGReader);
-                myreg.Reset();
+                Import_Credit myreg = new Import_Credit(eGReader);
+                myreg.set_amount_to_value_edited(6598);
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
             }

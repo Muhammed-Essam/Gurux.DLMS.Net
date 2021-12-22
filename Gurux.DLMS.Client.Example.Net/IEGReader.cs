@@ -151,15 +151,15 @@ namespace Gurux.DLMS.Client.Example.Net
             reader.ExecuteScript(OBIS_Code_LN, ScriptID);
         }
 
-        public void Execute_Method(byte[][] mymethod, GXReplyData reply)
+        public void Execute_Method_Edited(byte[][] mymethod, GXReplyData reply)
         {
             reader.ReadDataBlock(mymethod, reply); 
         }
 
-        public void Execute_Method_Edited(String OBIS_Code_LN, int Att_Index, DataType dataType, object value)
+        public void Execute_Method(String OBIS_Code_LN, int Att_Index, object value)
         {
-            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
-            reader.Method(myobject, Att_Index, value, dataType);
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);            
+            reader.Method(myobject, Att_Index, value, myobject.GetDataType(Att_Index));
         }
 
         public GXDLMSClient getClient()

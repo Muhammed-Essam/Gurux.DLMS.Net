@@ -41,7 +41,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             byte[][] result = register.Reset(this.eGReader.reader.Client);
 
-            this.eGReader.Execute_Method(result, reply);
+            this.eGReader.Execute_Method_Edited(result, reply);
         }
 
     }

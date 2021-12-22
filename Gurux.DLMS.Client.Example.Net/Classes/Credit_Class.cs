@@ -113,19 +113,19 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         }
 
 
-        public void set_amount_to_value(int value )
+        public void set_amount_to_value_edited(int value )
         {
             GXReplyData reply = new GXReplyData();
             GXDLMSCredit CreditRegister = new GXDLMSCredit();
 
             byte[][] mymethod = CreditRegister.SetAmountToValue(this.eGReader.reader.Client,value);
 
-            this.eGReader.Execute_Method(mymethod, reply);
+            this.eGReader.Execute_Method_Edited(mymethod, reply);
         }
 
-        public void set_amount_to_value_edited(int value )
+        public void set_amount_to_value(int value )
         {
-            this.eGReader.Execute_Method_Edited(this.OBIS, 2, Enums.DataType.Int32, value);
+            this.eGReader.Execute_Method(this.OBIS, 2, value);
         }
 
     }
