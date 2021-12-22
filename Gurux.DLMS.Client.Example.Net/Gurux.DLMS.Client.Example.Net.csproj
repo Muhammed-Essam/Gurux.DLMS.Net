@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Credit_Class.cs" />
     <Compile Include="Classes\Demand_Register_Class.cs" />
     <Compile Include="Classes\Extended_Register_Class.cs" />
     <Compile Include="Classes\Profile_Generic_Class.cs" />

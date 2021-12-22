@@ -211,11 +211,19 @@ namespace Gurux.DLMS.Client.Example.Net
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
             try
             {
-                Import_Account myreg = new Import_Account(eGReader);
-
-                GXCurrency s = (GXCurrency)myreg.currency();
-                MeterReader.Closer(eGReader);
-                Console.WriteLine(s.);
+                Import_Credit myreg = new Import_Credit(eGReader);
+                Console.WriteLine(myreg.credit_available_threshold);
+                Console.WriteLine(myreg.credit_configuration);
+                Console.WriteLine(myreg.credit_status);
+                Console.WriteLine(myreg.credit_type);
+                Console.WriteLine(myreg.Current_Credit_Amount); 
+                Console.WriteLine(myreg.limit);
+                Console.WriteLine(myreg.period);
+                Console.WriteLine(myreg.preset_credit_amount);
+                Console.WriteLine(myreg.priority);
+                Console.WriteLine(myreg.warning_threshold);
+                myreg.limit = 2;
+                Console.WriteLine(myreg.limit);
                 Console.ReadLine();
             }
             catch (Exception ex)
