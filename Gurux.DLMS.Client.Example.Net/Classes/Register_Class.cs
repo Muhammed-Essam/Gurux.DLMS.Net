@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Gurux.DLMS.Objects;
+using Gurux.DLMS.Secure;
+
 namespace Gurux.DLMS.Client.Example.Net.Classes
 {
     class Register_Class
@@ -11,6 +14,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         {
             this.OBIS = OBIS_LN;
             this.eGReader = eGReader;
+           
         }
 
         public object Get_Value()
@@ -28,6 +32,16 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         {
             List<object> struc = (List<object>)this.eGReader.Read_Object_Attribute(this.OBIS, 3);
             return (struc[1]);
+        }
+
+        public void Reset()
+        {
+            GXReplyData reply = new GXReplyData();
+            GXDLMSRegister register = new GXDLMSRegister();
+
+            byte[][] result = register.Reset(this.eGReader.reader.Client);
+
+            this.eGReader.Execute_Method(result, reply);
         }
 
     }
