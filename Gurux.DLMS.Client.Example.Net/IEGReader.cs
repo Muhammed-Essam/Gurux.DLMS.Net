@@ -17,7 +17,6 @@ namespace Gurux.DLMS.Client.Example.Net
         public Settings settings = new Settings();
         public Reader.GXDLMSReader reader = null;
 
-
         /// <summary>
         /// Constructor 
         /// Takes Initial Connection Parameters and Parse it 

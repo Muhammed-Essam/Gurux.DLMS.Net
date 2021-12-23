@@ -16,17 +16,24 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             this.OBIS = OBIS;
         }
 
-        public object Account_mode()
+        public object Account_mode
         {
-            object[] _ = (object[]) this.eGReader.Read_Object_Attribute(this.OBIS, 2);
-            return _[0];
+            get
+            {
+                object[] _ = (object[])this.eGReader.Read_Object_Attribute(this.OBIS, 2);
+                return _[0];
+            }
         }
 
-        public object Account_status()
+        public object Account_status
         {
-            object[] _ = (object[]) this.eGReader.Read_Object_Attribute(this.OBIS, 2);
-            return _[1];
+            get
+            {
+                object[] _ = (object[])this.eGReader.Read_Object_Attribute(this.OBIS, 2);
+                return _[1];
+            }
         }
+
         public object Account_status_Mode
         {
             set
@@ -36,10 +43,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-        public object Current_credit_in_use()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 3);
-        }
+        public object Current_credit_in_use => this.eGReader.Read_Object_Attribute(this.OBIS, 3);
 
         public object Current_credit_status => this.eGReader.Read_Object_Attribute(this.OBIS, 4);
 
@@ -114,19 +118,16 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public IEGReader EGReader { get => eGReader; set => eGReader = value; }
 
-        public object Next_credit_available_threshold()
+        public object Next_credit_available_threshold => this.eGReader.Read_Object_Attribute(this.OBIS, 17);
+
+        public object Max_provision => this.eGReader.Read_Object_Attribute(this.OBIS, 18);
+
+        public object Max_provision_period => this.eGReader.Read_Object_Attribute(this.OBIS, 19);
+
+        public void Activate_account()
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 17);
+            this.Account_activation_time = (object)DateTime.UtcNow;
         }
-
-        public object Max_provision()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 18);
-        }
-
-        public object Max_provision_period() => this.eGReader.Read_Object_Attribute(this.OBIS, 19);
-
-        public void Activate_account() => this.Account_activation_time = (object)DateTime.UtcNow;
 
         public void Close_account()
         {

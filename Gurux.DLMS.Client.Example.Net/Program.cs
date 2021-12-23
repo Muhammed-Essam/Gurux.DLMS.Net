@@ -211,14 +211,21 @@ namespace Gurux.DLMS.Client.Example.Net
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
             try
             {
-                Import_Credit myreg = new Import_Credit(eGReader);
+                Friendly_hours_activity_calendar myreg = new Friendly_hours_activity_calendar(eGReader);
                 /*GXStructure _ = new GXStructure();
                 _.Add(1);
                 _.Add(3);
                 myreg.account_status_Mode = _;*/
 
 
-                myreg.Set_amount_to_value(6080);
+                object _ = myreg.Calendar_name_active;
+                _ = myreg.Day_profile_table_active;
+                _ = myreg.Day_profile_table_passive;
+                _ = myreg.Week_profile_table_active;
+                _ = myreg.Week_profile_table_passive;
+                _ = myreg.Season_profile_active;
+                _ = myreg.Season_profile_passive;
+                _ = myreg.Activate_passive_calendar_time;
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
             }
