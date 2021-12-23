@@ -112,7 +112,6 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-
         public void set_amount_to_value_edited(int value )
         {
             GXReplyData reply = new GXReplyData();

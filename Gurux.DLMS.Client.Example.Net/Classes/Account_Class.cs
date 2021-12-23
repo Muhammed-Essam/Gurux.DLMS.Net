@@ -119,6 +119,22 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         }
 
         public object max_provision_period() => this.eGReader.Read_Object_Attribute(this.OBIS, 19);
+
+        public void activate_account()
+        {
+            this.eGReader.Execute_Method(this.OBIS, 1, 2, 0);
+        }
+
+        public void close_account()
+        {
+            object value = 0;
+            this.eGReader.Execute_Method(this.OBIS, 2, 2, value);
+        }
+
+        public void reset_account()
+        {
+            this.eGReader.Execute_Method(this.OBIS, 3, 2, 0);
+        }
     }
 
     class Import_Account : Account_Class
