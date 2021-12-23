@@ -16,6 +16,7 @@ namespace Gurux.DLMS.Client.Example.Net
     {
         public Settings settings = new Settings();
         public Reader.GXDLMSReader reader = null;
+        public String COM;
 
 
         /// <summary>
@@ -23,18 +24,19 @@ namespace Gurux.DLMS.Client.Example.Net
         /// Takes Initial Connection Parameters and Parse it 
         /// </summary>
         /// <param name="args">Connection parameters</param>
-        public IEGReader()
+        public IEGReader(String COM)
         {
+            this.COM = COM;
 
             var myIcon = Resource1.JICAXMLFilePath;
             ////////////////////////////////////////
             //Handle command line parameters.
-            String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
+            String[] argsE = { "-S", COM+":300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
             int ret = Settings.GetParameters(argsE, settings);
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
-            settings.outputFile = Resource1.JICAXMLFilePath;
+            settings.outputFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+ "\\JICA_Classes.xml";
 
 
             reader = new Reader.GXDLMSReader(settings.client, settings.media, settings.trace, settings.invocationCounter);

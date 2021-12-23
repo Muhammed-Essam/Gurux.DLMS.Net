@@ -10,9 +10,9 @@ namespace Gurux.DLMS.Client.Example.Net
     public class MeterReader
     {
 
-        public static IEGReader Intializer()
+        public static IEGReader Intializer(String com)
         {
-            IEGReader eGReader = new IEGReader();
+            IEGReader eGReader = new IEGReader(com);
 
             eGReader.Initialize_Connection();
             

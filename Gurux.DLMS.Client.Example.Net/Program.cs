@@ -40,6 +40,7 @@ using Gurux.DLMS.Enums;
 using System.Threading;
 using Gurux.DLMS.Objects;
 using Gurux.DLMS.Client.Example.Net.Classes;
+using System.IO.Ports;
 
 namespace Gurux.DLMS.Client.Example.Net
 {
@@ -197,37 +198,82 @@ namespace Gurux.DLMS.Client.Example.Net
         
         static void Main()
         {
-            IEGReader eGReader =  MeterReader.Intializer();
-            /* object Voltage = MeterReader.Voltage(eGReader);
-             object Credit = MeterReader.Credit(eGReader);
-             object Power = MeterReader.Power(eGReader);
- */
-            //MeterReader.Write_Credit(eGReader);
 
-            /*Console.WriteLine("Vatage: "+Voltage+" Credit: "+Credit+" Power: "+Power);
-            Console.WriteLine(watch.ElapsedMilliseconds);*/
-
-            //
-            // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
-            try
+            Console.WriteLine("Please Choose COM:");
+            String[] Ports = SerialPort.GetPortNames();
+            int index = 1;
+            foreach(String COM in Ports)
             {
-                Import_Account myreg = new Import_Account(eGReader);
-                /*GXStructure _ = new GXStructure();
-                _.Add(1);
-                _.Add(3);
-                myreg.account_status_Mode = _;*/
-
-
-                myreg.reset_account();
-                MeterReader.Closer(eGReader);
-                Console.ReadLine();
+                Console.WriteLine(index.ToString() + "- " + COM);
+                index++;
             }
-            catch (Exception ex)
+            String userInput = Console.ReadLine();
+            IEGReader eGReader;
+            while (true)
             {
-                Console.WriteLine(ex);
-                Console.ReadLine();
-                MeterReader.Closer(eGReader);
+
+                try
+                {
+                    Console.Clear();
+                    Console.WriteLine("Connecting to meter....");
+                    eGReader = MeterReader.Intializer(Ports[Int32.Parse(userInput) - 1]);
+                    Console.WriteLine("Connected! ");
+                    System.Threading.Thread.Sleep(2000);
+                    Console.Clear();
+                    break;
+                }
+                catch
+                {
+                    Console.WriteLine("Something Wrong Happened, Please try again!");
+                }
+
             }
+            
+
+            Console.Clear();
+
+            bool loop = true;
+            Import_Credit myreg = new Import_Credit(eGReader);
+            while (loop)
+            {
+
+                Console.Clear();
+                Console.WriteLine("1- Read Credit\n2- Set Credit\n3- Update Credit \n\n\n\n\n\n _____________________\n\n 4- Quit");
+                userInput = Console.ReadLine();
+                int Credit = 0;
+                Console.Clear();
+                switch (Int32.Parse(userInput))
+                {
+                    case 1:
+                        Console.WriteLine("Current Credit: "+myreg.Current_Credit_Amount+"\n\n\npress enter for new command!");
+                        Console.ReadLine();
+                        break;
+                    case 2:
+                        Console.WriteLine("Please enter Credit amount you want to set:");
+                        userInput = Console.ReadLine();
+                        Credit = Int32.Parse(userInput);
+                        myreg.set_amount_to_value(Credit);
+                        Console.WriteLine("Credit Updated! \n Current Credit: " + myreg.Current_Credit_Amount + "\n\n\npress enter for new command!");
+                        Console.ReadLine();
+                        break;
+                    case 3:
+                        Console.WriteLine("Please enter Credit amount you want to update:");
+                        userInput = Console.ReadLine();
+                        Credit = Int32.Parse(userInput);
+                        myreg.UpdateAmount(Credit);
+                        Console.WriteLine("Credit Updated! \n Current Credit: " + myreg.Current_Credit_Amount + "\n\n\npress enter for new command!");
+                        Console.ReadLine();
+                        break;
+                    case 4:
+                        MeterReader.Closer(eGReader);
+                        loop = false;
+                        break;
+                    default:
+                        Console.WriteLine("Wrong choice!");
+                        break;
+                }
+            }
+
             //MeterReader.BreakerDisconnect(eGReader);
             // MeterReader.ChargeCredit(eGReader,9876);
 
@@ -255,7 +301,7 @@ namespace Gurux.DLMS.Client.Example.Net
                } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
                Console.ReadKey();*/
-            MeterReader.Closer(eGReader);
+           
         }
 
        

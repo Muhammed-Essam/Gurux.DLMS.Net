@@ -2144,7 +2144,7 @@ namespace Gurux.DLMS.Reader
         public void Method(GXDLMSObject it, int attributeIndex, object value, DataType type)
         {
             GXReplyData reply = new GXReplyData();
-            ReadDataBlock(Client.Method(it, attributeIndex, value, type), reply);
+            ReadDataBlock_Edited(Client.Method(it, attributeIndex, value, type), reply);
         }
 
         /// <summary>
