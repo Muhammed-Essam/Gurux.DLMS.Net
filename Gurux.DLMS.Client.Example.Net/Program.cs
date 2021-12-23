@@ -219,6 +219,8 @@ namespace Gurux.DLMS.Client.Example.Net
 
 
                 object _ = myreg.Calendar_name_active;
+                myreg.Day_profile_table_passive = 0;
+
                 _ = myreg.Day_profile_table_active;
                 _ = myreg.Day_profile_table_passive;
                 _ = myreg.Week_profile_table_active;
@@ -229,6 +231,7 @@ namespace Gurux.DLMS.Client.Example.Net
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
             }
+            
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
