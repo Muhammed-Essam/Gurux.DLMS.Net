@@ -27,6 +27,14 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             object[] _ = (object[]) this.eGReader.Read_Object_Attribute(this.OBIS, 2);
             return _[1];
         }
+        public object account_status_Mode
+        {
+            set
+            {
+                
+                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 2, value);
+            }
+        }
 
         public object current_credit_in_use()
         {
@@ -78,14 +86,31 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             return this.eGReader.Read_Object_Attribute(this.OBIS, 12);
         }
 
-        public object account_activation_time()
+        public object account_activation_time
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 13);
+            get
+            {
+                return this.eGReader.Read_Object_Attribute(this.OBIS, 13);
+            }
+
+            set
+            {
+                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 13, value);
+            }
+            
         }
 
-        public object account_closure_time()
+        public object account_closure_time
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 14);
+            get
+            {
+                return this.eGReader.Read_Object_Attribute(this.OBIS, 14);
+            }
+
+            set
+            {
+                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 14, value);
+            }
         }
 
         public object currency
@@ -127,13 +152,27 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public void close_account()
         {
-            object value = 0;
-            this.eGReader.Execute_Method(this.OBIS, 2, 2, value);
+            /*//GXStructure value = new GXStructure
+            {
+                1,
+                3
+            };
+
+            //this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 2,(object)value);
+            //this.eGReader.Write_Value_Object_Attribute(this.OBIS, 2, value);*/
+
+            this.account_closure_time = (object) DateTime.UtcNow;
         }
 
         public void reset_account()
         {
-            this.eGReader.Execute_Method(this.OBIS, 3, 2, 0);
+            this.close_account();
+            GXStructure value = new GXStructure
+            {
+                (this.account_mode()),
+                1
+            };
+            this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 2, value);
         }
     }
 

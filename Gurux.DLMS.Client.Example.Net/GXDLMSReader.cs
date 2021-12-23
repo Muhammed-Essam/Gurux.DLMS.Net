@@ -2148,6 +2148,15 @@ namespace Gurux.DLMS.Reader
         }
 
         /// <summary>
+        /// Method attribute value.
+        /// </summary>
+        public void Method_Without_Datatype(GXDLMSObject it, int attributeIndex, object value)
+        {
+            GXReplyData reply = new GXReplyData();
+            ReadDataBlock(Client.Method(it, attributeIndex, value), reply);
+        }
+
+        /// <summary>
         /// Read Profile Generic Columns by entry.
         /// </summary>
         public object[] ReadRowsByEntry(GXDLMSProfileGeneric it, UInt32 index, UInt32 count)

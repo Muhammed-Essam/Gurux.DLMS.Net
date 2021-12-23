@@ -212,6 +212,12 @@ namespace Gurux.DLMS.Client.Example.Net
             try
             {
                 Import_Account myreg = new Import_Account(eGReader);
+                /*GXStructure _ = new GXStructure();
+                _.Add(1);
+                _.Add(3);
+                myreg.account_status_Mode = _;*/
+
+
                 myreg.close_account();
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
