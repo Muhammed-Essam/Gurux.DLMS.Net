@@ -153,7 +153,7 @@ namespace Gurux.DLMS.Client.Example.Net
 
         public void Execute_Method_Edited(byte[][] mymethod, GXReplyData reply)
         {
-            reader.ReadDataBlock(mymethod, reply); 
+            reader.ReadDataBlock_Edited(mymethod, reply); 
         }
 
         public void Execute_Method_Without_Datatype(String OBIS_Code_LN,int methodIndex, object value)

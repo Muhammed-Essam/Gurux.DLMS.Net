@@ -166,11 +166,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public void reset_account()
         {
-            this.close_account();
-            GXStructure value = new GXStructure();
-            value.Add(this.account_mode());
-            value.Add(1);
-            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 2, value);
+            this.eGReader.Execute_Method_Edited(new Objects.GXDLMSAccount(OBIS).Reset(this.eGReader.reader.Client), new GXReplyData());
         }
     }
 
