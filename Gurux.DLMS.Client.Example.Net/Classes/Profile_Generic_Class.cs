@@ -7,9 +7,9 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 {
     class Profile_Generic_Class
     {
-        string OBIS;
+        readonly string OBIS;
         IEGReader eGReader;
-        GXDLMSProfileGeneric GuruxObject;
+        readonly GXDLMSProfileGeneric GuruxObject;
 
         public Profile_Generic_Class(string OBIS, IEGReader eGReader)
         {
@@ -20,8 +20,8 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public object Get_Buffer()
         {
-            object CapturedObjects = Get_Capture_Objects();
-            return this.eGReader.Read_Object_Edited(this.OBIS, 2,null);
+            _ = Get_Capture_Objects();
+            return this.eGReader.Read_Object_Edited(this.OBIS, 2);
         }
         
         public object Get_Capture_Objects()

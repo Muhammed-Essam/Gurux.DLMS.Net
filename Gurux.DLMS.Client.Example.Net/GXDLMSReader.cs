@@ -61,10 +61,11 @@ namespace Gurux.DLMS.Reader
         /// </summary>
         public int RetryCount = 3;
         IGXMedia Media;
-        TraceLevel Trace;
+        readonly TraceLevel Trace;
         public GXDLMSSecureClient Client;
+
         // Invocation counter (frame counter).
-        string InvocationCounter = null;
+        readonly string InvocationCounter = null;
 
         /// <summary>
         /// Constructor.
@@ -1094,8 +1095,7 @@ namespace Gurux.DLMS.Reader
             ReadDataBlock(target.ImageTransferInitiate(Client, identification, data.Length), reply);
 
             // Step 3: Transfers ImageBlocks.
-            int imageBlockCount;
-            ReadDataBlock(target.ImageBlockTransfer(Client, data, out imageBlockCount), reply);
+            ReadDataBlock(target.ImageBlockTransfer(Client, data, out _), reply);
 
             //Step 4: Check the completeness of the Image.
             ReadDataBlock(Client.Read(target, 3), reply);
@@ -1325,7 +1325,7 @@ namespace Gurux.DLMS.Reader
                 {
                     GXDLMSObject[] cols = (it as GXDLMSProfileGeneric).GetCaptureObject();
                     StringBuilder sb = new StringBuilder();
-                    bool First = true;
+                    //bool First = true;
                     List<GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>> columns = new List<GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>>();
                     GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject> singleValue = new GXKeyValuePair<GXDLMSObject, GXDLMSCaptureObject>();
                     GXDLMSCaptureObject myCaptureObject = new GXDLMSCaptureObject();
@@ -1344,7 +1344,7 @@ namespace Gurux.DLMS.Reader
             }
             
         }
-        public void GetProfileGenericColumns_By_OBIS(GXDLMSObject it, object CapturedObjects)
+        public void GetProfileGenericColumns_By_OBIS(GXDLMSObject it)
         {
            // GetProfileGenericColumns_Edited(it);
             //Find profile generics register objects and read them.
@@ -1738,9 +1738,8 @@ namespace Gurux.DLMS.Reader
                             if (!notify.IsMoreData)
                             {
                                 //Show received push message as XML.
-                                string xml;
                                 GXDLMSTranslator t = new GXDLMSTranslator(TranslatorOutputType.SimpleXml);
-                                t.DataToXml(notify.Data, out xml);
+                                t.DataToXml(notify.Data, out string xml);
                                 Console.WriteLine(xml);
                                 notify.Clear();
                                 continue;
@@ -1849,9 +1848,8 @@ namespace Gurux.DLMS.Reader
                             if (!notify.IsMoreData)
                             {
                                 //Show received push message as XML.
-                                string xml;
                                 GXDLMSTranslator t = new GXDLMSTranslator(TranslatorOutputType.SimpleXml);
-                                t.DataToXml(notify.Data, out xml);
+                                t.DataToXml(notify.Data, out string xml);
                                 //Console.WriteLine(xml);
                                 notify.Clear();
                                 continue;
@@ -2045,11 +2043,13 @@ namespace Gurux.DLMS.Reader
         {
             GXReplyData reply = new GXReplyData();
             GXDLMSScriptTable ScriptTable = new GXDLMSScriptTable(COSEM);
-            GXDLMSScript script = new GXDLMSScript();
-            script.Id = ScriptID;
-            
+            GXDLMSScript script = new GXDLMSScript
+            {
+                Id = ScriptID
+            };
 
-            
+
+
             ReadDataBlock(ScriptTable.Execute(Client, script), reply);
         }
 
@@ -2132,10 +2132,10 @@ namespace Gurux.DLMS.Reader
             ReadDataBlock(Client.Write(it, attributeIndex), reply);
         }
 
-        public void WriteValue(String it, int attributeIndex, String Value)
+        public void WriteValue(String it, String Value)
         {
             GXReplyData reply = new GXReplyData();
-            ReadDataBlock(Client.Write( it,  Value, DataType.UInt16, ObjectType.Credit, 2), reply);
+            ReadDataBlock(Client.Write(it, Value, DataType.UInt16, ObjectType.Credit, 2), reply);
         }
 
         /// <summary>

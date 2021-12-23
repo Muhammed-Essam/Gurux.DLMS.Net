@@ -8,7 +8,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 {
     class Credit_Class
     {
-        string OBIS;
+        readonly string OBIS;
         IEGReader eGReader;
 
         public Credit_Class(string OBIS, IEGReader eGReader)
@@ -26,7 +26,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object credit_type
+        public object Credit_type
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object priority
+        public object Priority
         {
             get
             {
@@ -44,7 +44,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object warning_threshold
+        public object Warning_threshold
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object limit
+        public object Limit
         {
             get
             {
@@ -67,7 +67,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object credit_configuration
+        public object Credit_configuration
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object credit_status
+        public object Credit_status
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object preset_credit_amount
+        public object Preset_credit_amount
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object credit_available_threshold
+        public object Credit_available_threshold
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public object period
+        public object Period
         {
             get
             {
@@ -112,7 +112,9 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public void set_amount_to_value_edited(int value )
+        public IEGReader EGReader { get => eGReader; set => eGReader = value; }
+
+        public void Set_amount_to_value_edited(int value )
         {
             GXReplyData reply = new GXReplyData();
             GXDLMSCredit CreditRegister = new GXDLMSCredit();
@@ -122,7 +124,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             this.eGReader.Execute_Method_Edited(mymethod, reply);
         }
 
-        public void set_amount_to_value(int value )
+        public void Set_amount_to_value(int value )
         {
             this.eGReader.Execute_Method(this.OBIS, 2, 2, value);
         }

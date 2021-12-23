@@ -211,14 +211,14 @@ namespace Gurux.DLMS.Client.Example.Net
             // Gurux.DLMS.GXDateTime obj = (Gurux.DLMS.GXDateTime) eGReader.Read_Object("0.0.1.0.0.255",2 );
             try
             {
-                Import_Account myreg = new Import_Account(eGReader);
+                Import_Credit myreg = new Import_Credit(eGReader);
                 /*GXStructure _ = new GXStructure();
                 _.Add(1);
                 _.Add(3);
                 myreg.account_status_Mode = _;*/
 
 
-                myreg.reset_account();
+                myreg.Set_amount_to_value(6080);
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
             }

@@ -7,7 +7,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 {
     class Account_Class
     {
-        string OBIS;
+        readonly string OBIS;
         IEGReader eGReader;
 
         public Account_Class(string OBIS, IEGReader eGReader)
@@ -16,18 +16,18 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             this.OBIS = OBIS;
         }
 
-        public object account_mode()
+        public object Account_mode()
         {
             object[] _ = (object[]) this.eGReader.Read_Object_Attribute(this.OBIS, 2);
             return _[0];
         }
 
-        public object account_status()
+        public object Account_status()
         {
             object[] _ = (object[]) this.eGReader.Read_Object_Attribute(this.OBIS, 2);
             return _[1];
         }
-        public object account_status_Mode
+        public object Account_status_Mode
         {
             set
             {
@@ -36,57 +36,36 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-        public object current_credit_in_use()
+        public object Current_credit_in_use()
         {
             return this.eGReader.Read_Object_Attribute(this.OBIS, 3);
         }
 
-        public object current_credit_status()
+        public object Current_credit_status => this.eGReader.Read_Object_Attribute(this.OBIS, 4);
+
+        public object Available_credit
         {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 4);
+            get
+            {
+                return this.eGReader.Read_Object_Attribute(this.OBIS, 5);
+            }
         }
 
-        public object available_credit()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 5);
-        }
+        public object Amount_to_clear => this.eGReader.Read_Object_Attribute(this.OBIS, 6);
 
-        public object amount_to_clear()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 6);
-        }
+        public object Clearance_threshold => this.eGReader.Read_Object_Attribute(this.OBIS, 7);
 
-        public object clearance_threshold()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 7);
-        }
+        public object Aggregated_debt => this.eGReader.Read_Object_Attribute(this.OBIS, 8);
 
-        public object aggregated_debt()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 8);
-        }
+        public object Credit_reference_list => this.eGReader.Read_Object_Attribute(this.OBIS, 9);
 
-        public object credit_reference_list()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 9);
-        }
+        public object Charge_reference_list => this.eGReader.Read_Object_Attribute(this.OBIS, 10);
 
-        public object charge_reference_list()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 10);
-        }
+        public object Credit_charge_configuration => this.eGReader.Read_Object_Attribute(this.OBIS, 11);
 
-        public object credit_charge_configuration()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 11);
-        }
+        public object Token_gateway_configuration => this.eGReader.Read_Object_Attribute(this.OBIS, 12);
 
-        public object token_gateway_configuration()
-        {
-            return this.eGReader.Read_Object_Attribute(this.OBIS, 12);
-        }
-
-        public object account_activation_time
+        public object Account_activation_time
         {
             get
             {
@@ -100,7 +79,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             
         }
 
-        public object account_closure_time
+        public object Account_closure_time
         {
             get
             {
@@ -113,7 +92,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-        public object currency
+        public object Currency
         {
             get 
             {
@@ -122,10 +101,10 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             set
             {
-                currency = value;
+                Currency = value;
             }
         }
-        public object low_credit_threshold
+        public object Low_credit_threshold
         {
             get
             {
@@ -133,24 +112,23 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-        public object next_credit_available_threshold()
+        public IEGReader EGReader { get => eGReader; set => eGReader = value; }
+
+        public object Next_credit_available_threshold()
         {
             return this.eGReader.Read_Object_Attribute(this.OBIS, 17);
         }
 
-        public object max_provision()
+        public object Max_provision()
         {
             return this.eGReader.Read_Object_Attribute(this.OBIS, 18);
         }
 
-        public object max_provision_period() => this.eGReader.Read_Object_Attribute(this.OBIS, 19);
+        public object Max_provision_period() => this.eGReader.Read_Object_Attribute(this.OBIS, 19);
 
-        public void activate_account()
-        {
-            this.account_activation_time = (object)DateTime.UtcNow;
-        }
+        public void Activate_account() => this.Account_activation_time = (object)DateTime.UtcNow;
 
-        public void close_account()
+        public void Close_account()
         {
             /*//GXStructure value = new GXStructure
             {
@@ -161,10 +139,10 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             //this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 2,(object)value);
             //this.eGReader.Write_Value_Object_Attribute(this.OBIS, 2, value);*/
 
-            this.account_closure_time = (object) DateTime.UtcNow;
+            this.Account_closure_time = (object) DateTime.UtcNow;
         }
 
-        public void reset_account()
+        public void Reset_account()
         {
             this.eGReader.Execute_Method_Edited(new Objects.GXDLMSAccount(OBIS).Reset(this.eGReader.reader.Client), new GXReplyData());
         }

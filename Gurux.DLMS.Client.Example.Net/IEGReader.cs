@@ -25,12 +25,11 @@ namespace Gurux.DLMS.Client.Example.Net
         /// <param name="args">Connection parameters</param>
         public IEGReader()
         {
-
-            var myIcon = Resource1.JICAXMLFilePath;
+            _ = Resource1.JICAXMLFilePath;
             ////////////////////////////////////////
             //Handle command line parameters.
             String[] argsE = { "-S", "COM4:300:7Even1", "-i", "HdlcWithModeE", "-c", "1", "-s", "145", "-a", "Low", "-P", "12345678", "-d", "Idis", "-t", "Verbose" };
-            int ret = Settings.GetParameters(argsE, settings);
+            _ = Settings.GetParameters(argsE, settings);
 
             ////////////////////////////////////////
             //Xml file path that contains all the meter COSEM objects.
@@ -95,13 +94,13 @@ namespace Gurux.DLMS.Client.Example.Net
             return val;
         }
 
-        public object Read_Object_Edited(String OBIS_Code_LN, int Att_Index, object CapturedObjects)
+        public object Read_Object_Edited(String OBIS_Code_LN, int Att_Index)
         {
             GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
 
             object val = null;// reader.Read_Edited(myobject, Att_Index);
 
-            reader.GetProfileGenericColumns_By_OBIS(myobject, CapturedObjects);
+            reader.GetProfileGenericColumns_By_OBIS(myobject);
 
             return val;
         }
@@ -168,7 +167,7 @@ namespace Gurux.DLMS.Client.Example.Net
             reader.Method(myobject, methodIndex, value, myobject.GetDataType(Att_Index));
         }
 
-        public GXDLMSClient getClient()
+        public GXDLMSClient GetClient()
         {
             return reader.Client;
         }
