@@ -147,7 +147,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         public void activate_account()
         {
-            this.eGReader.Execute_Method(this.OBIS, 1, 2, 0);
+            this.account_activation_time = (object)DateTime.UtcNow;
         }
 
         public void close_account()
@@ -167,12 +167,10 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         public void reset_account()
         {
             this.close_account();
-            GXStructure value = new GXStructure
-            {
-                (this.account_mode()),
-                1
-            };
-            this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 2, value);
+            GXStructure value = new GXStructure();
+            value.Add(this.account_mode());
+            value.Add(1);
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 2, value);
         }
     }
 

@@ -218,7 +218,7 @@ namespace Gurux.DLMS.Client.Example.Net
                 myreg.account_status_Mode = _;*/
 
 
-                myreg.close_account();
+                myreg.reset_account();
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
             }
