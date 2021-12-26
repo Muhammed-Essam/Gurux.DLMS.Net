@@ -149,7 +149,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             return _;
         }
         
-        public GXArray Create_Day_Profile (int Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
+        public GXStructure Create_Day_Profile (int Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
         {
             
 
@@ -164,12 +164,12 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             day.Add(dayID);
             day.Add(actions);
 
-            return new GXArray { day };
+            return day;
         }
 
         public void ReplaceAll_Day_profiles(int Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
         {
-            GXArray new_day = this.Create_Day_Profile(Day_ID, hour, minute, second, millisecond, ScriptLogicalName, scriptSelector);
+            GXArray new_day = new GXArray { this.Create_Day_Profile(Day_ID, hour, minute, second, millisecond, ScriptLogicalName, scriptSelector) };
             this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, new_day);
         }
 
