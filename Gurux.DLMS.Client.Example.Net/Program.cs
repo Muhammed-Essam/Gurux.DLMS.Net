@@ -226,6 +226,9 @@ namespace Gurux.DLMS.Client.Example.Net
 
                // _ = myreg.Day_profile_table_active;
                 object _ = myreg.Day_profile_table_passive;
+
+                myreg.Add_New_Action_to_Exicting_Day_Actions(8, 6, 0, 0, 0, "0.0.10.7.0.255", 2);
+                //myreg.Add_New_Day_to_Exciting_Profile(8, 2,0,0,0, "0.0.10.7.0.255",2);
                
 
                 MeterReader.Closer(eGReader);

@@ -173,18 +173,97 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, new_day);
         }
 
-        public void Add_New_Day_to_Exciting_Profile()
+        public void Add_New_Day_to_Exciting_Profile(int Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
         {
             GXDLMSDayProfile[] exciting_profile = (GXDLMSDayProfile[])this.Day_profile_table_passive;
 
+            GXArray myDays = new GXArray();
 
-            List<GXArray> days_list = new List<GXArray>();
-
-            foreach (GXDLMSDayProfile DayOfWeek in exciting_profile)
+            foreach (GXDLMSDayProfile dayProfile in exciting_profile)
             {
+             
+                int my_day_ID = dayProfile.DayId;
+                
+                GXDLMSDayProfileAction[] actions = dayProfile.DaySchedules;
+                GXArray myactions = new GXArray();
+                foreach (GXDLMSDayProfileAction action in actions)
+                {
+                    int day_hour = action.StartTime.Value.Hour;
+                    int day_minute = action.StartTime.Value.Minute;
+                    int day_second = action.StartTime.Value.Second;
+                    int day_millisecond = action.StartTime.Value.Second;
+                    string day_ScriptLogicalName = action.ScriptLogicalName;
+                    ushort day_scriptSelector = (ushort)action.ScriptSelector;
+
+                    myactions.Add(this.Create_Day_Action(day_hour, day_minute, day_second, day_millisecond, day_ScriptLogicalName, day_scriptSelector));
+                }
+
+                GXStructure current_day = new GXStructure { my_day_ID, myactions };
+                myDays.Add(current_day);
+            }
+
+            GXStructure new_day = Create_Day_Profile(Day_ID, hour, minute, second, millisecond, ScriptLogicalName, scriptSelector);
+            myDays.Add(new_day);
+
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, myDays);
+
+        }
+
+        public void Add_Action_to_Exicting_Day_Actions(int Desired_Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
+        {
+            GXDLMSDayProfile[] exciting_profile = (GXDLMSDayProfile[])this.Day_profile_table_passive;
+
+            GXArray myDays = new GXArray();
+
+            foreach (GXDLMSDayProfile dayProfile in exciting_profile)
+            {
+
+                if (dayProfile.DayId == Desired_Day_ID)
+                {
+                    GXDLMSDayProfileAction[] actions = dayProfile.DaySchedules;
+                    GXArray myactions = new GXArray();
+                    
+                    foreach (GXDLMSDayProfileAction action in actions)
+                    {
+                        int day_hour = action.StartTime.Value.Hour;
+                        int day_minute = action.StartTime.Value.Minute;
+                        int day_second = action.StartTime.Value.Second;
+                        int day_millisecond = action.StartTime.Value.Second;
+                        string day_ScriptLogicalName = action.ScriptLogicalName;
+                        ushort day_scriptSelector = (ushort)action.ScriptSelector;
+
+                        myactions.Add(this.Create_Day_Action(day_hour, day_minute, day_second, day_millisecond, day_ScriptLogicalName, day_scriptSelector));
+                    }
+                    myactions.Add(this.Create_Day_Action(hour, minute, second, millisecond, ScriptLogicalName, scriptSelector));
+                    
+                    GXStructure current_day = new GXStructure { Desired_Day_ID, myactions };
+                    myDays.Add(current_day);
+                }
+                else
+                {
+                    int my_day_ID = dayProfile.DayId;
+
+                    GXDLMSDayProfileAction[] actions = dayProfile.DaySchedules;
+                    GXArray myactions = new GXArray();
+                    foreach (GXDLMSDayProfileAction action in actions)
+                    {
+                        int day_hour = action.StartTime.Value.Hour;
+                        int day_minute = action.StartTime.Value.Minute;
+                        int day_second = action.StartTime.Value.Second;
+                        int day_millisecond = action.StartTime.Value.Second;
+                        string day_ScriptLogicalName = action.ScriptLogicalName;
+                        ushort day_scriptSelector = (ushort)action.ScriptSelector;
+
+                        myactions.Add(this.Create_Day_Action(day_hour, day_minute, day_second, day_millisecond, day_ScriptLogicalName, day_scriptSelector));
+                    }
+
+                    GXStructure current_day = new GXStructure { my_day_ID, myactions };
+                    myDays.Add(current_day);
+                }
 
             }
 
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, myDays);
         }
         public void Activate_passive_calendar()
         {
