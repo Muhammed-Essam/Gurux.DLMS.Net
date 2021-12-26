@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gurux.Serial;
-using Gurux.Net;
 using System.Threading;
 using Gurux.DLMS.Enums;
 using Gurux.DLMS.Objects;
@@ -9,6 +7,7 @@ using Gurux.DLMS.Client.Example.Net.Properties;
 using System.Linq;
 using System.Text;
 using Gurux.DLMS.Reader;
+using Gurux.Serial;
 
 namespace Gurux.DLMS.Client.Example.Net
 {
@@ -126,6 +125,8 @@ namespace Gurux.DLMS.Client.Example.Net
         {
             GXDLMSObject _ = Read_ObjectSelf(OBIS_Code_LN);
             reader.SetValue(_ ,Att_Index, value);
+
+            
             Write_Object_On_Meter(_ , Att_Index);
         }
 

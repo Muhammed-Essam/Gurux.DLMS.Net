@@ -36,10 +36,11 @@ using Gurux.DLMS.ASN;
 using Gurux.DLMS.Ecdsa;
 using Gurux.DLMS.Ecdsa.Enums;
 using Gurux.DLMS.Enums;
+using Gurux.DLMS.Internal;
 using Gurux.DLMS.Objects;
 using Gurux.DLMS.Objects.Enums;
 using Gurux.DLMS.Secure;
-using Gurux.Serial;
+using Gurux.DLMS.Client.Example.Net.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,6 +48,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Text;
 using System.Threading;
+using Gurux.Serial;
 
 namespace Gurux.DLMS.Reader
 {
@@ -438,7 +440,7 @@ namespace Gurux.DLMS.Reader
             {
                 if (Trace > TraceLevel.Info)
                 {
-                    Console.WriteLine("Send SNRM request." + GXCommon.ToHex(data, true));
+                    Console.WriteLine("Send SNRM request." + Internal.GXCommon.ToHex(data, true));
                 }
                 ReadDataBlock(data, reply);
                 if (Trace == TraceLevel.Verbose)
@@ -482,7 +484,7 @@ namespace Gurux.DLMS.Reader
             {
                 if (Trace > TraceLevel.Info)
                 {
-                    Console.WriteLine("Send AARQ request", GXCommon.ToHex(it, true));
+                    Console.WriteLine("Send AARQ request", Internal.GXCommon.ToHex(it, true));
                 }
                 reply.Clear();
                 ReadDataBlock(it, reply);
@@ -536,7 +538,7 @@ namespace Gurux.DLMS.Reader
                     {
                         if (Trace > TraceLevel.Info)
                         {
-                            Console.WriteLine("Send SNRM request." + GXCommon.ToHex(data, true));
+                            Console.WriteLine("Send SNRM request." + Internal.GXCommon.ToHex(data, true));
                         }
                         ReadDataBlock(data, reply);
                         if (Trace == TraceLevel.Verbose)
@@ -557,7 +559,7 @@ namespace Gurux.DLMS.Reader
                     {
                         if (Trace > TraceLevel.Info)
                         {
-                            Console.WriteLine("Send AARQ request", GXCommon.ToHex(it, true));
+                            Console.WriteLine("Send AARQ request", Internal.GXCommon.ToHex(it, true));
                         }
                         reply.Clear();
                         ReadDataBlock(it, reply);
@@ -993,12 +995,12 @@ namespace Gurux.DLMS.Reader
             if (Client.Ciphering.Security != Security.None)
             {
                 Console.WriteLine("Security: " + Client.Ciphering.Security);
-                Console.WriteLine("System title: " + GXCommon.ToHex(Client.Ciphering.SystemTitle, true));
-                Console.WriteLine("Authentication key: " + GXCommon.ToHex(Client.Ciphering.AuthenticationKey, true));
-                Console.WriteLine("Block cipher key " + GXCommon.ToHex(Client.Ciphering.BlockCipherKey, true));
+                Console.WriteLine("System title: " + Internal.GXCommon.ToHex(Client.Ciphering.SystemTitle, true));
+                Console.WriteLine("Authentication key: " + Internal.GXCommon.ToHex(Client.Ciphering.AuthenticationKey, true));
+                Console.WriteLine("Block cipher key " + Internal.GXCommon.ToHex(Client.Ciphering.BlockCipherKey, true));
                 if (Client.Ciphering.DedicatedKey != null)
                 {
-                    Console.WriteLine("Dedicated key: " + GXCommon.ToHex(Client.Ciphering.DedicatedKey, true));
+                    Console.WriteLine("Dedicated key: " + Internal.GXCommon.ToHex(Client.Ciphering.DedicatedKey, true));
                 }
             }
             UpdateFrameCounter();
@@ -1012,7 +1014,7 @@ namespace Gurux.DLMS.Reader
             {
                 if (Trace > TraceLevel.Info)
                 {
-                    Console.WriteLine("Send AARQ request", GXCommon.ToHex(it, true));
+                    Console.WriteLine("Send AARQ request", Internal.GXCommon.ToHex(it, true));
                 }
                 reply.Clear();
                 ReadDataBlock(it, reply);
@@ -1111,11 +1113,11 @@ namespace Gurux.DLMS.Reader
             bool bFound = false;
             foreach (GXDLMSImageActivateInfo it in target.ImageActivateInfo)
             {
-                if (GXCommon.EqualBytes(it.Identification, identification))
+                /*if (GXCommon.EqualBytes(it.Identification, identification))
                 {
                     bFound = true;
                     break;
-                }
+                }*/
             }
 
             //Read image transfer status.
@@ -1397,7 +1399,7 @@ namespace Gurux.DLMS.Reader
                             {
                                 if (cell is byte[])
                                 {
-                                    sb.Append(GXCommon.ToHex((byte[])cell, true));
+                                    sb.Append(Internal.GXCommon.ToHex((byte[])cell, true));
                                 }
                                 else
                                 {
@@ -1434,7 +1436,7 @@ namespace Gurux.DLMS.Reader
                             {
                                 if (cell is byte[])
                                 {
-                                    sb.Append(GXCommon.ToHex((byte[])cell, true));
+                                    sb.Append(Internal.GXCommon.ToHex((byte[])cell, true));
                                 }
                                 else
                                 {
@@ -1464,7 +1466,7 @@ namespace Gurux.DLMS.Reader
                 //If data is array.
                 if (val is byte[])
                 {
-                    val = GXCommon.ToHex((byte[])val, true);
+                    val = Internal.GXCommon.ToHex((byte[])val, true);
                 }
                 else if (val is Array)
                 {
@@ -1477,7 +1479,7 @@ namespace Gurux.DLMS.Reader
                         }
                         if ((val as Array).GetValue(pos2) is byte[])
                         {
-                            str += GXCommon.ToHex((byte[])(val as Array).GetValue(pos2), true);
+                            str += Internal.GXCommon.ToHex((byte[])(val as Array).GetValue(pos2), true);
                         }
                         else
                         {
@@ -1499,7 +1501,7 @@ namespace Gurux.DLMS.Reader
                         empty = false;
                         if (it2 is byte[])
                         {
-                            str += GXCommon.ToHex((byte[])it2, true);
+                            str += Internal.GXCommon.ToHex((byte[])it2, true);
                         }
                         else
                         {
@@ -1560,7 +1562,7 @@ namespace Gurux.DLMS.Reader
                                 {
                                     if (cell is byte[])
                                     {
-                                        sb.Append(GXCommon.ToHex((byte[])cell, true));
+                                        sb.Append(Internal.GXCommon.ToHex((byte[])cell, true));
                                     }
                                     else
                                     {
@@ -1597,7 +1599,7 @@ namespace Gurux.DLMS.Reader
                                 {
                                     if (cell is byte[])
                                     {
-                                        sb.Append(GXCommon.ToHex((byte[])cell, true));
+                                        sb.Append(Internal.GXCommon.ToHex((byte[])cell, true));
                                     }
                                     else
                                     {
@@ -1704,7 +1706,7 @@ namespace Gurux.DLMS.Reader
                 {
                     if (!reply.IsStreaming())
                     {
-                        WriteTrace("TX:\t" + DateTime.Now.ToLongTimeString() + "\t" + GXCommon.ToHex(data, true));
+                        WriteTrace("TX:\t" + DateTime.Now.ToLongTimeString() + "\t" + Internal.GXCommon.ToHex(data, true));
                         p.Reply = null;
                         Media.Send(data, null);
                     }
@@ -1814,7 +1816,7 @@ namespace Gurux.DLMS.Reader
                 {
                     if (!reply.IsStreaming())
                     {
-                        //WriteTrace("TX:\t" + DateTime.Now.ToLongTimeString() + "\t" + GXCommon.ToHex(data, true));
+                        //WriteTrace("TX:\t" + DateTime.Now.ToLongTimeString() + "\t" + Internal.GXCommon.ToHex(data, true));
                         p.Reply = null;
                         Media.Send(data, null);
                     }
