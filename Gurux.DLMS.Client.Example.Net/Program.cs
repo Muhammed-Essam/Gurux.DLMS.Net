@@ -221,16 +221,12 @@ namespace Gurux.DLMS.Client.Example.Net
 
 
                 //myreg.Day_profile_table_passive = ss;
-                myreg.Day_profile_table_passive = 0;
+                
          
 
                // _ = myreg.Day_profile_table_active;
-                _ = myreg.Day_profile_table_passive;
-                _ = myreg.Week_profile_table_active;
-                _ = myreg.Week_profile_table_passive;
-                _ = myreg.Season_profile_active;
-                _ = myreg.Season_profile_passive;
-                _ = myreg.Activate_passive_calendar_time;
+                object _ = myreg.Day_profile_table_passive;
+               
 
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
