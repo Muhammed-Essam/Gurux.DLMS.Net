@@ -174,9 +174,11 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         {
             GXStructure _ = new GXStructure();
 
-            GXTime startTime = new GXTime(hour, minute, second, millisecond);
+            byte[] startTime = new byte[4] { (byte) hour, (byte) minute, (byte) second, (byte) millisecond};
 
-            _.Add(BitConverter.GetBytes((int)startTime.Value.Ticks));
+            
+            _.Add(startTime);
+
 
             _.Add(GXDLMSConverter.LogicalNameToBytes("0.0.10.7.0.255"));
 
