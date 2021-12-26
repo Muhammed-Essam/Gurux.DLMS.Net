@@ -218,21 +218,20 @@ namespace Gurux.DLMS.Client.Example.Net
                 myreg.account_status_Mode = _;*/
 
 
-<<<<<<< HEAD
-                GXDLMSWeekProfile[] ss = myreg.Create_Week_Profile(3, 1, 0, 1, 0, 1, 0, 1);
-                myreg.Week_profile_table_passive = ss;
-=======
-                object _ = myreg.Calendar_name_active;
-                myreg.Day_profile_table_passive = 0;
 
-                _ = myreg.Day_profile_table_active;
+
+                //myreg.Day_profile_table_passive = ss;
+                myreg.Day_profile_table_passive = 0;
+         
+
+               // _ = myreg.Day_profile_table_active;
                 _ = myreg.Day_profile_table_passive;
                 _ = myreg.Week_profile_table_active;
                 _ = myreg.Week_profile_table_passive;
                 _ = myreg.Season_profile_active;
                 _ = myreg.Season_profile_passive;
                 _ = myreg.Activate_passive_calendar_time;
->>>>>>> 953e3ece00934e84bbd5c9e1eb78382ab8871c9d
+
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
             }

@@ -46,6 +46,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             {
                 return this.eGReader.Read_Object_Attribute(this.OBIS, 5);
             }
+
         }
 
         public object Calendar_name_passive 
@@ -91,14 +92,19 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             set
             {
-                GXDLMSDayProfile[] daysProfiles = (GXDLMSDayProfile[])this.Day_profile_table_passive;
+                //object daysProfiles = this.Create_Day_Profile(5, 5, 20, 0, 0, 1) ;
 
-                daysProfiles = daysProfiles.Concat( new GXDLMSDayProfile[] { this.Create_Day_Profile(5, 5, 20, 0, 0, "0.0.10.7.0.255", 1) }).ToArray();
-                
+                //daysProfiles = daysProfiles.Concat( new GXDLMSDayProfile[] { this.Create_Day_Profile(5, 5, 20, 0, 0, 1) }).ToArray();
+
+                /*GXDLMSDayProfile[] daysProfiless = new GXDLMSDayProfile[3];
+                foreach (GXDLMSDayProfile dayprofile in daysProfiles)
+                {
+                    daysProfiless.
+                }*/
 
           
                 _ = value;
-                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, daysProfiles);
+                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, this.create_Day());
             }
         }
 
@@ -139,11 +145,11 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             return myProfileArray;
         }
 
-        public GXDLMSDayProfile Create_Day_Profile(int dayID, int hour, int minute, int second, int millisecond, string scriptLogicalName_OBIS, ushort scriptSelector)
+        public List<object> Create_Day_Profile(int dayID, int hour, int minute, int second, int millisecond, ushort scriptSelector)
         {
 
             GXTime startTime = new GXTime(hour, minute, second, millisecond);
-            GXDLMSDayProfileAction dayAction = new GXDLMSDayProfileAction(startTime, scriptLogicalName_OBIS, scriptSelector);
+            GXDLMSDayProfileAction dayAction = new GXDLMSDayProfileAction(startTime, this.OBIS, scriptSelector);
 
             GXDLMSDayProfileAction[] dayProfileActions = new GXDLMSDayProfileAction[]
             {
@@ -152,10 +158,41 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             GXDLMSDayProfile dayProfile = new GXDLMSDayProfile(dayID, dayProfileActions);
 
-            return dayProfile;
+            List<object> _ = new List<object> { (object) dayProfile };
+            return _;
 
         }
-      
+        
+        public GXStructure dayaction(int hour, int minute, int second, int millisecond, ushort scriptSelector)
+        {
+            GXStructure _ = new GXStructure();
+
+            GXTime startTime = new GXTime(hour, minute, second, millisecond);
+
+            _.Add(BitConverter.GetBytes((int)startTime.Value.Ticks));
+
+            _.Add(GXDLMSConverter.LogicalNameToBytes("0.0.10.7.0.255"));
+
+            _.Add((object)scriptSelector);
+
+            return _;
+        }
+        public GXArray create_Day ()
+        {
+            //int DayID, int hour, int minute, int second, int millisecond, ushort scriptSelector
+            GXArray _ = new GXArray();
+
+            GXStructure day_ = new GXStructure();
+            byte dayID = (byte) 5;
+            GXArray actions = new GXArray();
+            actions.Add(this.dayaction(5, 20, 0, 0, 1));
+
+            day_.Add(dayID);
+            day_.Add(actions);
+
+            _.Add(day_);
+            return _;
+        }
 
         public void Activate_passive_calendar()
         {

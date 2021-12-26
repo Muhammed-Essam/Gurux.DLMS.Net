@@ -258,7 +258,7 @@ namespace Gurux.DLMS.Client.Example
                             }
                             else if (string.Compare("DigitallySigned", it.Value, true) == 0)
                             {
-                                settings.client.Ciphering.Security = Security.DigitallySigned;
+                                //settings.client.Ciphering.Security = Security.DigitallySigned;
                             }
                             else
                             {
