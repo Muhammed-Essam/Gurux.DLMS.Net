@@ -88,23 +88,6 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         public object Day_profile_table_passive
         {
             get => this.eGReader.Read_Object_Attribute(this.OBIS, 9);
-
-            set
-            {
-                //object daysProfiles = this.Create_Day_Profile(5, 5, 20, 0, 0, 1) ;
-
-                //daysProfiles = daysProfiles.Concat( new GXDLMSDayProfile[] { this.Create_Day_Profile(5, 5, 20, 0, 0, 1) }).ToArray();
-
-                /*GXDLMSDayProfile[] daysProfiless = new GXDLMSDayProfile[3];
-                foreach (GXDLMSDayProfile dayprofile in daysProfiles)
-                {
-                    daysProfiless.
-                }*/
-
-          
-                _ = value;
-                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, this.create_Day());
-            }
         }
 
         public object Activate_passive_calendar_time
@@ -198,57 +181,58 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             return myProfileList;
         }
-
-
-        public List<object> Create_Day_Profile(int dayID, int hour, int minute, int second, int millisecond, ushort scriptSelector)
-        {
-
-            GXTime startTime = new GXTime(hour, minute, second, millisecond);
-            GXDLMSDayProfileAction dayAction = new GXDLMSDayProfileAction(startTime, this.OBIS, scriptSelector);
-
-            GXDLMSDayProfileAction[] dayProfileActions = new GXDLMSDayProfileAction[]
-            {
-                dayAction
-            };
-
-            GXDLMSDayProfile dayProfile = new GXDLMSDayProfile(dayID, dayProfileActions);
-
-            List<object> _ = new List<object> { (object) dayProfile };
-            return _;
-
-        }
         
-        public GXStructure dayaction(int hour, int minute, int second, int millisecond, ushort scriptSelector)
+        public GXStructure Create_Day_Action(int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
         {
             GXStructure _ = new GXStructure();
 
-            GXTime startTime = new GXTime(hour, minute, second, millisecond);
-
-            _.Add(BitConverter.GetBytes((int)startTime.Value.Ticks));
-
-            _.Add(GXDLMSConverter.LogicalNameToBytes("0.0.10.7.0.255"));
-
+            byte[] startTime = new byte[4] { (byte) hour, (byte) minute, (byte) second, (byte) millisecond};
+            _.Add(startTime);
+            
+            byte[] script = GXDLMSConverter.LogicalNameToBytes(ScriptLogicalName);
+            _.Add(script);
+            
             _.Add((object)scriptSelector);
-
             return _;
         }
-        public GXArray create_Day ()
+        
+        public GXStructure Create_Day_Profile (int Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
         {
-            //int DayID, int hour, int minute, int second, int millisecond, ushort scriptSelector
-            GXArray _ = new GXArray();
+            
 
-            GXStructure day_ = new GXStructure();
-            byte dayID = (byte) 5;
+            GXStructure day = new GXStructure();
+
+            byte dayID = (byte) Day_ID;
+
             GXArray actions = new GXArray();
-            actions.Add(this.dayaction(5, 20, 0, 0, 1));
+            //5, 20, 0, 0,"0.0.10.7.0.255", 1
+            actions.Add(this.Create_Day_Action(hour, minute, second, millisecond, ScriptLogicalName, scriptSelector));
 
-            day_.Add(dayID);
-            day_.Add(actions);
+            day.Add(dayID);
+            day.Add(actions);
 
-            _.Add(day_);
-            return _;
+            return day;
         }
 
+        public void ReplaceAll_Day_profiles(int Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
+        {
+            GXArray new_day = new GXArray { this.Create_Day_Profile(Day_ID, hour, minute, second, millisecond, ScriptLogicalName, scriptSelector) };
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, new_day);
+        }
+
+        public void Add_New_Day_to_Exciting_Profile()
+        {
+            GXDLMSDayProfile[] exciting_profile = (GXDLMSDayProfile[])this.Day_profile_table_passive;
+
+
+            List<GXArray> days_list = new List<GXArray>();
+
+            foreach (GXDLMSDayProfile DayOfWeek in exciting_profile)
+            {
+
+            }
+
+        }
         public void Activate_passive_calendar()
         {
             

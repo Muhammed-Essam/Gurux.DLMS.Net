@@ -496,6 +496,7 @@
     <Compile Include="VoltageReader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="app.config" />
     <None Include="Development\Gurux.DLMS.Net.csproj" />
     <None Include="Development\LocalTestRun.testrunconfig" />
@@ -504,8 +505,6 @@
     <None Include="packages.config" />
     <None Include="packages\Gurux.Common.8.1.2109.2401\.signature.p7s" />
     <None Include="packages\Gurux.Common.8.1.2109.2401\Gurux.Common.8.1.2109.2401.nupkg" />
-    <None Include="packages\Gurux.DLMS.9.0.2112.1701\.signature.p7s" />
-    <None Include="packages\Gurux.DLMS.9.0.2112.1701\Gurux.DLMS.9.0.2112.1701.nupkg" />
     <None Include="packages\Gurux.Net.8.1.2109.2401\.signature.p7s" />
     <None Include="packages\Gurux.Net.8.1.2109.2401\Gurux.Net.8.1.2109.2401.nupkg" />
     <None Include="packages\Gurux.Serial.8.1.2109.2401\.signature.p7s" />
@@ -976,13 +975,6 @@
     <Content Include="packages\Gurux.Common.8.1.2109.2401\lib\netstandard2.1\uk\Gurux.Common.resources.dll" />
     <Content Include="packages\Gurux.Common.8.1.2109.2401\lib\netstandard2.1\ur\Gurux.Common.resources.dll" />
     <Content Include="packages\Gurux.Common.8.1.2109.2401\lib\netstandard2.1\vi\Gurux.Common.resources.dll" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\Gurux.DLMS.png" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\lib\net40\Gurux.DLMS.dll" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\lib\net45\Gurux.DLMS.dll" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\lib\net46\Gurux.DLMS.dll" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\lib\netcoreapp2.1\Gurux.DLMS.dll" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\lib\netcoreapp3.1\Gurux.DLMS.dll" />
-    <Content Include="packages\Gurux.DLMS.9.0.2112.1701\lib\netstandard2.0\Gurux.DLMS.dll" />
     <Content Include="packages\Gurux.Net.8.1.2109.2401\lib\net35\af\Gurux.Net.resources.dll" />
     <Content Include="packages\Gurux.Net.8.1.2109.2401\lib\net35\ar\Gurux.Net.resources.dll" />
     <Content Include="packages\Gurux.Net.8.1.2109.2401\lib\net35\az\Gurux.Net.resources.dll" />
