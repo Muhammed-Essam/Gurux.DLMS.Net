@@ -112,7 +112,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-<<<<<<< HEAD
+
         public GXDLMSWeekProfile[] Create_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
         {
             byte ByteName = (byte)Name;
@@ -134,10 +134,11 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
                 {
                 myProfile
                 };
-           
+
 
             return myProfileArray;
-=======
+        }
+
         public GXDLMSDayProfile Create_Day_Profile(int dayID, int hour, int minute, int second, int millisecond, string scriptLogicalName_OBIS, ushort scriptSelector)
         {
 
@@ -152,7 +153,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             GXDLMSDayProfile dayProfile = new GXDLMSDayProfile(dayID, dayProfileActions);
 
             return dayProfile;
->>>>>>> 953e3ece00934e84bbd5c9e1eb78382ab8871c9d
+
         }
       
 
