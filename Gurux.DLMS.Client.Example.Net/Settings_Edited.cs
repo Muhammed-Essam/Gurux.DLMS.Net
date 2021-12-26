@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Gurux.Common;
-using Gurux.Serial;
 using Gurux.Net;
+using Gurux.Serial;
 using Gurux.DLMS.Enums;
 using Gurux.DLMS.Secure;
 using System.Diagnostics;

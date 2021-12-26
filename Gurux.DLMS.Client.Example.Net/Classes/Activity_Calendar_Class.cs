@@ -10,7 +10,6 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
     {
         readonly string OBIS;
         IEGReader eGReader;
-
         public Activity_Calendar_Class(string OBIS, IEGReader eGReader)
         {
             this.eGReader = eGReader;
@@ -119,7 +118,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         }
 
 
-        public GXDLMSWeekProfile[] Create_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
+        public GXArray Create_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
         {
             byte ByteName = (byte)Name;
             byte[] ByteNameArray = new byte[1];
@@ -136,13 +135,21 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             myProfile.Friday = Friday;
 
 
-            GXDLMSWeekProfile[] myProfileArray = new GXDLMSWeekProfile[]
-                {
-                myProfile
-                };
+            GXStructure structure = new GXStructure();
+            structure.Add( myProfile.Name);//(byte[])item[0];
+            structure.Add(myProfile.Monday);//Convert.ToInt32(item[1]);
+            structure.Add(myProfile.Tuesday);//Convert.ToInt32(item[2]);
+            structure.Add(myProfile.Wednesday);//Convert.ToInt32(item[3]);
+            structure.Add(myProfile.Thursday);//Convert.ToInt32(item[4]);
+            structure.Add(myProfile.Friday);//Convert.ToInt32(item[5]);
+            structure.Add(myProfile.Saturday);//Convert.ToInt32(item[6]);
+            structure.Add(myProfile.Sunday);//Convert.ToInt32(item[7]);
+
+            GXArray myProfileList = new GXArray();
+            myProfileList.Add(structure);
 
 
-            return myProfileArray;
+            return myProfileList;
         }
 
         public List<object> Create_Day_Profile(int dayID, int hour, int minute, int second, int millisecond, ushort scriptSelector)
