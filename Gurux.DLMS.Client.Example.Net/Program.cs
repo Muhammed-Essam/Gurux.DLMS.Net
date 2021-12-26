@@ -56,7 +56,7 @@ namespace Gurux.DLMS.Client.Example.Net
                 Friendly_hours_activity_calendar myreg = new Friendly_hours_activity_calendar(eGReader);
 
 
-                myreg.Week_profile_table_passive = myreg.Add_Week_Profile(1, 5, 6, 5, 6, 5, 6, 6);
+                myreg.Activate_passive_calendar();
 
                 MeterReader.Closer(eGReader);
                 Console.ReadLine();
