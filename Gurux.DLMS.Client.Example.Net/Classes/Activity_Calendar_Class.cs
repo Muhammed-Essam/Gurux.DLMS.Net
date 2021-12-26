@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Gurux.DLMS.Objects;
 
 namespace Gurux.DLMS.Client.Example.Net.Classes
 {
@@ -79,6 +80,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             set
             {
+                
                 this.eGReader.Write_Value_Object_Attribute(this.OBIS, 8, value);
             }
         }
@@ -89,7 +91,14 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             set
             {
-                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, value);
+                GXDLMSDayProfile[] daysProfiles = (GXDLMSDayProfile[])this.Day_profile_table_passive;
+
+                daysProfiles = daysProfiles.Concat( new GXDLMSDayProfile[] { this.Create_Day_Profile(5, 5, 20, 0, 0, "0.0.10.7.0.255", 1) }).ToArray();
+                
+
+          
+                _ = value;
+                this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, daysProfiles);
             }
         }
 
@@ -103,10 +112,49 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-        public object Create_Day_Profile()
+<<<<<<< HEAD
+        public GXDLMSWeekProfile[] Create_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
         {
-            GXDLMSDay
+            byte ByteName = (byte)Name;
+            byte[] ByteNameArray = new byte[1];
+            ByteNameArray[0] = ByteName;
+
+            GXDLMSWeekProfile myProfile = new GXDLMSWeekProfile();
+            myProfile.Name = ByteNameArray;
+            myProfile.Saturday = Saturday;
+            myProfile.Sunday = Sunday;
+            myProfile.Monday = Monday;
+            myProfile.Tuesday = Tuesday;
+            myProfile.Wednesday = Wednesday;
+            myProfile.Thursday = Thursday;
+            myProfile.Friday = Friday;
+
+
+            GXDLMSWeekProfile[] myProfileArray = new GXDLMSWeekProfile[]
+                {
+                myProfile
+                };
+           
+
+            return myProfileArray;
+=======
+        public GXDLMSDayProfile Create_Day_Profile(int dayID, int hour, int minute, int second, int millisecond, string scriptLogicalName_OBIS, ushort scriptSelector)
+        {
+
+            GXTime startTime = new GXTime(hour, minute, second, millisecond);
+            GXDLMSDayProfileAction dayAction = new GXDLMSDayProfileAction(startTime, scriptLogicalName_OBIS, scriptSelector);
+
+            GXDLMSDayProfileAction[] dayProfileActions = new GXDLMSDayProfileAction[]
+            {
+                dayAction
+            };
+
+            GXDLMSDayProfile dayProfile = new GXDLMSDayProfile(dayID, dayProfileActions);
+
+            return dayProfile;
+>>>>>>> 953e3ece00934e84bbd5c9e1eb78382ab8871c9d
         }
+      
 
         public void Activate_passive_calendar()
         {
