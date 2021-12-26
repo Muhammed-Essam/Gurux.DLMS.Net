@@ -228,7 +228,7 @@ namespace Gurux.DLMS.Properties {
         /// </summary>
         internal static string OtherReasonTxt {
             get {
-                return ResourceManager.GetString("OtherReasonTxt", resourceCulture);
+                return "";// ResourceManager.GetString("OtherReasonTxt", resourceCulture);
             }
         }
         

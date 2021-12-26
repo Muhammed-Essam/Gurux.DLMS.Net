@@ -100,9 +100,62 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             }
         }
 
-
-        public GXArray Create_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
+        public GXStructure ConvertWeekToGXStructure(GXDLMSWeekProfile SingleWeek)
         {
+            GXStructure structure = new GXStructure();
+            structure.Add(SingleWeek.Name);//(byte[])item[0];
+            structure.Add(SingleWeek.Monday);//Convert.ToInt32(item[1]);
+            structure.Add(SingleWeek.Tuesday);//Convert.ToInt32(item[2]);
+            structure.Add(SingleWeek.Wednesday);//Convert.ToInt32(item[3]);
+            structure.Add(SingleWeek.Thursday);//Convert.ToInt32(item[4]);
+            structure.Add(SingleWeek.Friday);//Convert.ToInt32(item[5]);
+            structure.Add(SingleWeek.Saturday);//Convert.ToInt32(item[6]);
+            structure.Add(SingleWeek.Sunday);//Convert.ToInt32(item[7]);
+            return structure;
+
+        }
+
+        public GXArray ConvertWeekProfileToGXArray(GXDLMSWeekProfile[] WeekProfile)
+        {
+            GXArray WeekArray = new GXArray();
+            foreach(GXDLMSWeekProfile week in WeekProfile)
+            {
+                WeekArray.Add(ConvertWeekToGXStructure(week));
+            }
+            return WeekArray;
+        }
+
+        public GXArray Replace_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
+        {
+         
+
+            byte ByteName = (byte)Name;
+            byte[] ByteNameArray = new byte[1];
+            ByteNameArray[0] = ByteName;
+
+            GXDLMSWeekProfile myProfile = new GXDLMSWeekProfile();
+            myProfile.Name = ByteNameArray;
+            myProfile.Saturday = Saturday;
+            myProfile.Sunday = Sunday;
+            myProfile.Monday = Monday;
+            myProfile.Tuesday = Tuesday;
+            myProfile.Wednesday = Wednesday;
+            myProfile.Thursday = Thursday;
+            myProfile.Friday = Friday;
+
+            GXStructure structure = ConvertWeekToGXStructure(myProfile);
+            GXArray myProfileList = new GXArray();
+            myProfileList.Add(structure);
+
+
+            return myProfileList;
+        }
+
+        public GXArray Add_Week_Profile(int Name, int Saturday, int Sunday, int Monday, int Tuesday, int Wednesday, int Thursday, int Friday)
+        {
+
+            object CurrentWeekProfile = Week_profile_table_passive;
+
             byte ByteName = (byte)Name;
             byte[] ByteNameArray = new byte[1];
             ByteNameArray[0] = ByteName;
@@ -118,17 +171,11 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             myProfile.Friday = Friday;
 
 
-            GXStructure structure = new GXStructure();
-            structure.Add( myProfile.Name);//(byte[])item[0];
-            structure.Add(myProfile.Monday);//Convert.ToInt32(item[1]);
-            structure.Add(myProfile.Tuesday);//Convert.ToInt32(item[2]);
-            structure.Add(myProfile.Wednesday);//Convert.ToInt32(item[3]);
-            structure.Add(myProfile.Thursday);//Convert.ToInt32(item[4]);
-            structure.Add(myProfile.Friday);//Convert.ToInt32(item[5]);
-            structure.Add(myProfile.Saturday);//Convert.ToInt32(item[6]);
-            structure.Add(myProfile.Sunday);//Convert.ToInt32(item[7]);
 
-            GXArray myProfileList = new GXArray();
+
+            GXStructure structure = ConvertWeekToGXStructure(myProfile);
+
+            GXArray myProfileList = ConvertWeekProfileToGXArray((GXDLMSWeekProfile[])CurrentWeekProfile);
             myProfileList.Add(structure);
 
 
@@ -267,7 +314,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         }
         public void Activate_passive_calendar()
         {
-            
+            this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 1, (sbyte)0);
         }
     }
 
