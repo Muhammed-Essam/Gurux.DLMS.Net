@@ -23,6 +23,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
                 return this.eGReader.Read_Object_Attribute(this.OBIS, 2);
             }
         }
+
         public object Season_profile_active
         {
             get
@@ -256,7 +257,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
         }
 
-        public void Add_Action_to_Exicting_Day_Actions(int Desired_Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
+        public void Add_New_Action_to_Exicting_Day_Actions(int Desired_Day_ID, int hour, int minute, int second, int millisecond, string ScriptLogicalName, ushort scriptSelector)
         {
             GXDLMSDayProfile[] exciting_profile = (GXDLMSDayProfile[])this.Day_profile_table_passive;
 
@@ -321,6 +322,16 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
     class Activity_Calendar_Tariff : Activity_Calendar_Class
     {
         public Activity_Calendar_Tariff(IEGReader eGReader) : base("0.0.13.0.0.255", eGReader) { }
+    }
+    
+    class Activity_Calendar_Breaker : Activity_Calendar_Class
+    {
+        public Activity_Calendar_Breaker(IEGReader eGReader) : base("0.0.13.0.1.255", eGReader) { }
+    }
+
+    class Activity_Calendar_Relay : Activity_Calendar_Class
+    {
+        public Activity_Calendar_Relay(IEGReader eGReader) : base("0.0.13.0.2.255", eGReader) { }
     }
 
     class Friendly_hours_activity_calendar : Activity_Calendar_Class
