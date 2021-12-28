@@ -317,6 +317,70 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         {
             this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 1, (sbyte)0);
         }
+
+        public void Set_season_profile()
+        {
+            GXDateTimeOS starttime = new GXDateTimeOS(DateTime.Now);
+            
+            GXDLMSSeasonProfile seasonProfile = new GXDLMSSeasonProfile("6", starttime, "6");
+
+            GXDLMSActivityCalendar activityCalendar = new GXDLMSActivityCalendar(this.OBIS);
+
+            activityCalendar.SeasonProfilePassive = new GXDLMSSeasonProfile[] { seasonProfile };
+
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 7, new GXDLMSSeasonProfile[] { seasonProfile });
+        }
+
+        public static byte[] Combine(byte[][] arrays)
+        {
+            byte[] bytes = new byte[0];
+
+            foreach (byte[] b in arrays)
+            {
+                bytes.Concat(b);
+            }
+
+            return bytes.ToArray();
+        }
+        public void Create_Season_Profile_Struct()
+        {
+            byte[] season_name = new byte[] { (byte)5 };
+
+            GXDateTime f = DateTime.Now;
+            //DateTime f = new DateTime();
+
+            byte hiYear = BitConverter.GetBytes(f.Value.Year)[0];
+            byte loYear = BitConverter.GetBytes(f.Value.Year)[1];
+            byte month = BitConverter.GetBytes(f.Value.Month)[0];
+            byte DayOfmonth = BitConverter.GetBytes(f.Value.Day)[0];
+            byte DayOfWeek = BitConverter.GetBytes((int)f.Value.DayOfWeek)[0];
+            byte Hour = BitConverter.GetBytes(f.Value.Hour)[0];
+            byte Minute = BitConverter.GetBytes(f.Value.Minute)[0];
+            byte Second = BitConverter.GetBytes(f.Value.Second)[0];
+            byte Millisecond = BitConverter.GetBytes(f.Value.Millisecond)[1];
+            byte hiDeviation = (byte)0x80;
+            byte loDeviation = (byte)0x00;
+            byte clock = 0xFF;
+            byte[] starttime = new byte[] { loYear, hiYear, month, DayOfmonth, DayOfWeek, Hour, Minute, Second, Millisecond, hiDeviation, loDeviation, clock };
+
+
+
+
+            //byte [] starttime = Encoding.ASCII.GetBytes(f.ToHex(false, false));
+            byte[] week_name = new byte[] { (byte)5 };
+
+            //byte[] starttime = new byte[] { (byte)255,(byte)255,(byte)1,(byte)1,(byte)1,(byte)0,(byte)0,(byte)0,(byte)0,(byte)128,(byte)0,(byte)255};
+            
+            
+
+            GXStructure ___ = new GXStructure { season_name, starttime, week_name };
+
+            GXArray ff = new GXArray { ___ };
+
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 7, ff);
+
+            
+        }
     }
 
     class Activity_Calendar_Tariff : Activity_Calendar_Class

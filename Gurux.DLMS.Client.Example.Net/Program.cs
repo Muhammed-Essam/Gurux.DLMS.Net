@@ -218,16 +218,17 @@ namespace Gurux.DLMS.Client.Example.Net
                 myreg.account_status_Mode = _;*/
 
                 //myreg.Day_profile_table_passive = ss;
-                Friendly_Hours_Special_Days myreg2 = new Friendly_Hours_Special_Days(eGReader);
-                object ______ = myreg2.Entries;
+                Friendly_hours_activity_calendar myreg2 = new Friendly_hours_activity_calendar(eGReader);
+                //object __ = myreg2.Season_profile_passive;
+                myreg2.Create_Season_Profile_Struct();
 
                 // _ = myreg.Day_profile_table_active;
-                object _ = myreg.Day_profile_table_passive;
+                //object _ = myreg.Day_profile_table_passive;
 
-                myreg.Add_Week_Profile(5, 3, 4, 3, 4, 3, 4, 3);
+                //myreg.Add_Week_Profile(5, 3, 4, 3, 4, 3, 4, 3);
                // myreg.Add_New_Action_to_Exicting_Day_Actions(8, 9, 0, 0, 0, "0.0.10.7.0.255", 2);
 
-                myreg.Activate_passive_calendar();
+                //myreg.Activate_passive_calendar();
                 //myreg.Add_New_Day_to_Exciting_Profile(8, 2,0,0,0, "0.0.10.7.0.255",2);
                
 
