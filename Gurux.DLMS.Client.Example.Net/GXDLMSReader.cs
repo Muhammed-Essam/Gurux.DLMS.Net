@@ -2020,6 +2020,32 @@ namespace Gurux.DLMS.Reader
             return Client.UpdateValue(it, attributeIndex, reply.Value);
         }
 
+        public object Read_Edited_Bytes(GXDLMSObject it, int attributeIndex)
+        {
+            GXReplyData reply = new GXReplyData();
+            if (!ReadDataBlock_Edited(Client.Read(it, attributeIndex), reply))
+            {
+                if (reply.Error != (short)ErrorCode.Rejected)
+                {
+                    throw new GXDLMSException(reply.Error);
+                }
+                reply.Clear();
+                Thread.Sleep(1000);
+                if (!ReadDataBlock_Edited(Client.Read(it, attributeIndex), reply))
+                {
+                    throw new GXDLMSException(reply.Error);
+                }
+            }
+            //Update data type.
+            if (it.GetDataType(attributeIndex) == DataType.None)
+            {
+                it.SetDataType(attributeIndex, reply.DataType);
+            }
+            return reply.Value;
+        }
+
+
+
         public void BreakerDisconnect()
         {
             GXReplyData reply = new GXReplyData();

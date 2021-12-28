@@ -25,14 +25,14 @@ namespace Gurux.DLMS.Client.Example.Net
             LastDay
         };
 
-        public byte[] Single_DateTime_as_Byte(int Year, int Month, int Day, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
+       /* public byte[] Single_DateTime_as_Byte(int Year, int Month, int Day, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
 
         {
             byte hiYear = BitConverter.GetBytes(Year)[0];
             byte loYear = BitConverter.GetBytes(Year)[1];
             byte month = BitConverter.GetBytes(Month)[0];
             byte DayOfmonth = BitConverter.GetBytes(Day)[0];
-            byte DayOfWeek = BitConverter.GetBytes((int)dateTime.Value.DayOfWeek)[0];
+           // byte DayOfWeek = BitConverter.GetBytes((int)dateTime.Value.DayOfWeek)[0];
             byte Hour_ = BitConverter.GetBytes(Hour)[0];
             byte Minute_ = BitConverter.GetBytes(Minute)[0];
             byte Second_ = BitConverter.GetBytes(Second)[0];
@@ -56,7 +56,7 @@ namespace Gurux.DLMS.Client.Example.Net
                 return new byte[] { loYear, hiYear, month, DayOfmonth, DayOfWeek, Hour_, Minute_, Second_, Millisecond_, hiDeviation, loDeviation, clock };
             }
         }
-
+        */
         public byte[] Every_Day_DateTime_as_Byte(int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
 
         {

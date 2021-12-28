@@ -482,6 +482,7 @@
     <Compile Include="Development\TranslatorSimpleTags.cs" />
     <Compile Include="Development\TranslatorStandardTags.cs" />
     <Compile Include="Development\ValueEventArgs.cs" />
+    <Compile Include="EGDatetime.cs" />
     <Compile Include="GXDLMSReader.cs" />
     <Compile Include="IEGReader.cs" />
     <Compile Include="Properties\Resource1.Designer.cs">
