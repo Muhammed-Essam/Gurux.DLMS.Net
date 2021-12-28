@@ -393,6 +393,7 @@ namespace Gurux.DLMS
             return DateTime.MinValue;
         }
 
+
         /// <summary>
         /// Constructor.
         /// </summary>
