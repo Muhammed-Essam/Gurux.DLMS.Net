@@ -148,7 +148,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             GXArray myProfileList = new GXArray();
             myProfileList.Add(structure);
 
-
+            this.Week_profile_table_passive = myProfileList;
             return myProfileList;
         }
 
@@ -178,6 +178,8 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             GXArray myProfileList = ConvertWeekProfileToGXArray((GXDLMSWeekProfile[])CurrentWeekProfile);
             myProfileList.Add(structure);
+
+            this.Week_profile_table_passive = myProfileList;
 
 
             return myProfileList;
@@ -313,6 +315,247 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
 
             this.eGReader.Write_Value_Object_Attribute(this.OBIS, 9, myDays);
         }
+        
+        
+        
+        public byte[] CreateSeason_NotDefined()
+        {
+            byte[] result = new byte[12];
+            result[0] = (byte)255;
+            result[1] = (byte)255;
+            result[2] = (byte)255;
+            result[3] = (byte)255;
+            result[4] = (byte)255;
+            result[5] = (byte)255;
+            result[6] = (byte)255;
+            result[7] = (byte)255;
+            result[8] = (byte)255;
+            result[9] = (byte)128;
+            result[10] = (byte)0;
+            result[11] = (byte)255;
+
+            return result;
+        }
+        public byte[] CreateSeason_Single(int hour, int minute, int seconds, int day, int month, int year)
+        {
+
+            ulong number = (ulong)year;
+            byte upper = (byte)(number >> 8);
+            byte lower = (byte)(number & 0xff);
+
+           
+
+
+
+          
+
+            DateTime dateTime = new DateTime(year, month, day, hour, minute, seconds);
+            int myDayofWeek = (int)dateTime.DayOfWeek;
+
+            if (myDayofWeek == 0)
+                myDayofWeek = 7;
+
+                byte[] result = new byte[12];
+            result[0] = upper;
+            result[1] = lower;
+            result[2] = (byte)month;
+            result[3] = (byte)day;
+            result[4] = (byte)myDayofWeek;
+            result[5] = (byte)hour;
+            result[6] = (byte)minute;
+            result[7] = (byte)seconds;
+            result[8] = (byte)0;
+            result[9] = (byte)128;
+            result[10] = (byte)0;
+            result[11] = (byte)255;
+
+            return result;
+
+        }
+        public byte[] CreateSeason_EveryDay(int hour, int minute, int seconds)
+        {
+         
+            byte[] result = new byte[12];
+            result[0] = (byte)255;
+            result[1] = (byte)255;
+            result[2] = (byte)255;
+            result[3] = (byte)255;
+            result[4] = (byte)255;
+            result[5] = (byte)hour;
+            result[6] = (byte)minute;
+            result[7] = (byte)seconds;
+            result[8] = (byte)0;
+            result[9] = (byte)128;
+            result[10] = (byte)0;
+            result[11] = (byte)255;
+
+            return result;
+        }
+        public enum DaysOfWeek { Monday = 1,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday};
+
+        public enum EveryMonthEnum
+        {
+            OnDay,
+            SecondLastDay = 253,
+            LastDay
+        };
+         public enum EveryYearEnum
+        {
+            OnDay,
+            first=1,
+            second=8,
+            third=15,
+            fourth=22,
+            last,
+            secondLast=253,
+            LastDay=254
+        };
+
+        public byte[] CreateSeason_EveryWeek(DaysOfWeek dayOfWeek, int hour, int minute, int seconds)
+        {
+            
+            byte[] result = new byte[12];
+            result[0] = (byte)255;
+            result[1] = (byte)255;
+            result[2] = (byte)255;
+            result[3] = (byte)255;
+            result[4] = (byte)dayOfWeek;
+            result[5] = (byte)hour;
+            result[6] = (byte)minute;
+            result[7] = (byte)seconds;
+            result[8] = (byte)0;
+            result[9] = (byte)128;
+            result[10] = (byte)0;
+            result[11] = (byte)255;
+
+            return result;
+        }
+
+        public byte[] CreateSeason_EveryMonth(EveryMonthEnum option, int Day, int hour, int minute, int seconds )
+        {
+
+
+            byte[] result = new byte[12];
+            result[0] = (byte)255;
+            result[1] = (byte)255;
+            result[2] = (byte)255;
+
+            if (option == EveryMonthEnum.OnDay)
+                result[3] = (byte)Day;
+            else
+                result[3] = (byte)option;
+
+            result[4] = (byte)255;
+            result[5] = (byte)hour;
+            result[6] = (byte)minute;
+            result[7] = (byte)seconds;
+            result[8] = (byte)0;
+            result[9] = (byte)128;
+            result[10] = (byte)0;
+            result[11] = (byte)255;
+
+            return result;
+        }
+        public byte[] CreateSeason_EveryYear(EveryYearEnum option, int hour, int minute, int seconds, DaysOfWeek daysOfWeek, int Day, int month, int year)
+        {
+            int myDayofWeek = 0;
+            try {
+                DateTime dateTime = new DateTime(year, month, Day, hour, minute, seconds);
+                 myDayofWeek = (int)dateTime.DayOfWeek;
+
+                if (myDayofWeek == 0)
+                    myDayofWeek = 7;
+            }
+            catch { }
+            
+
+            byte[] result = new byte[12];
+            result[0] = (byte)255;
+            result[1] = (byte)255;
+            result[2] = (byte)month;
+            if (option == EveryYearEnum.OnDay)
+            {
+                result[3] = (byte)Day;
+            }
+            else if (option == EveryYearEnum.last)
+                result[3] = (byte)254;
+            else
+                result[3] = (byte)option;
+
+
+
+
+           
+           
+            if(option == EveryYearEnum.secondLast || option == EveryYearEnum.LastDay || option == EveryYearEnum.OnDay)
+            {
+                result[4] = (byte)255;
+            }
+            else 
+            {
+                result[4] = (byte)daysOfWeek;
+            }
+
+
+
+            result[5] = (byte)hour;
+            result[6] = (byte)minute;
+            result[7] = (byte)seconds;
+            result[8] = (byte)0;
+            result[9] = (byte)128;
+            result[10] = (byte)0;
+            result[11] = (byte)255;
+
+            return result;
+        }
+
+        public void CreateSeasonProfile()
+        {
+ 
+
+            byte[] season_name = new byte[] { (byte)5 };
+
+            byte[] week_name = new byte[] { (byte)5 };
+
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 7, new GXArray {
+            new GXStructure { season_name, CreateSeason_EveryMonth(EveryMonthEnum.SecondLastDay,2,16,21,28), new byte[] { (byte)5 } },
+            new GXStructure { season_name, CreateSeason_EveryYear(EveryYearEnum.first,17,52,6,DaysOfWeek.Thursday,28,4,2023), new byte[] { (byte)5 } },
+            new GXStructure { season_name, CreateSeason_EveryYear(EveryYearEnum.second,17,52,6,DaysOfWeek.Thursday,28,4,2023), new byte[] { (byte)5 } },
+            new GXStructure { season_name, CreateSeason_EveryYear(EveryYearEnum.third,17,52,6,DaysOfWeek.Thursday,28,4,2023), new byte[] { (byte)5 } }
+
+            });
+        }
+        public byte[] DateTimeByte(DateTime myDate)
+        {
+            int year = myDate.Year;
+            int Month = myDate.Month;
+            int Day = myDate.Day;
+
+            float temp1 = (((float)year - 7) / 255);
+            float temp2 = temp1 - (int) temp1;
+            float temp3 = temp2 * 255 + (float)0.1;
+
+            
+
+
+            byte[] result = new byte[] { 
+            (byte)(int) temp1,
+            (byte)(int) temp3
+
+            };
+
+
+            return null;
+        }
+        
+        
+        
         public void Activate_passive_calendar()
         {
             this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 1, (sbyte)0);
