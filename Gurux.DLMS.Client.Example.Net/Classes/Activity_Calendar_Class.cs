@@ -66,7 +66,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         {
             get
             {
-                return this.eGReader.Read_Object_Attribute(this.OBIS, 7);
+                return this.eGReader.Read_Object_Attribute_Bytes(this.OBIS, 7);
             }
 
             set
@@ -515,22 +515,34 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             return result;
         }
 
-        public void CreateSeasonProfile()
+        public void AddSeasonProfile(int Season, byte[] Start, int WeekName)
         {
- 
 
-            byte[] season_name = new byte[] { (byte)5 };
 
-            byte[] week_name = new byte[] { (byte)5 };
+            byte[] season_name = new byte[] { (byte)Season };
+
+            byte[] week_name = new byte[] { (byte)WeekName };
+
+            GXArray currentSeason = (GXArray)this.Season_profile_passive;
+
+            currentSeason.Add(new GXStructure { season_name, Start, week_name });
+
+            this.eGReader.Write_Value_Object_Attribute(this.OBIS, 7, currentSeason);
+        }
+
+        public void ReplaceSeasonProfile(int SeasonName, byte[] Start, int WeekName)
+        {
+
+
+            byte[] season_name = new byte[] { (byte)SeasonName };
+
+            byte[] week_name = new byte[] { (byte)WeekName };
 
             this.eGReader.Write_Value_Object_Attribute(this.OBIS, 7, new GXArray {
-            new GXStructure { season_name, CreateSeason_EveryMonth(EveryMonthEnum.SecondLastDay,2,16,21,28), new byte[] { (byte)5 } },
-            new GXStructure { season_name, CreateSeason_EveryYear(EveryYearEnum.first,17,52,6,DaysOfWeek.Thursday,28,4,2023), new byte[] { (byte)5 } },
-            new GXStructure { season_name, CreateSeason_EveryYear(EveryYearEnum.second,17,52,6,DaysOfWeek.Thursday,28,4,2023), new byte[] { (byte)5 } },
-            new GXStructure { season_name, CreateSeason_EveryYear(EveryYearEnum.third,17,52,6,DaysOfWeek.Thursday,28,4,2023), new byte[] { (byte)5 } }
-
-            });
+                new GXStructure{
+                season_name,Start,week_name} });
         }
+
         public byte[] DateTimeByte(DateTime myDate)
         {
             int year = myDate.Year;

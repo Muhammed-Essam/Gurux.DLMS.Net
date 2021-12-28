@@ -92,6 +92,17 @@ namespace Gurux.DLMS.Client.Example.Net
             return val;
         }
 
+        public object Read_Object_Attribute_Bytes(String OBIS_Code_LN, int Att_Index)
+        {
+            GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
+
+            object val = reader.Read_Edited_Bytes(myobject, Att_Index);
+
+            
+
+            return val;
+        }
+
         public object Read_Object_Edited(String OBIS_Code_LN, int Att_Index)
         {
             GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);
