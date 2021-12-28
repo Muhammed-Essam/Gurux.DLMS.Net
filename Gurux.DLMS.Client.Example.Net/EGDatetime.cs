@@ -18,21 +18,32 @@ namespace Gurux.DLMS.Client.Example.Net
             Sunday
         };
 
-        public enum EveryMonthEnum
+        public enum DayOfMonth
+        {
+            OnDay = 0x00,
+            SecondLastDay = 0xFD,
+            LastDay = 0xFE
+        };
+        public enum EveryYearEnum
         {
             OnDay,
-            SecondLastDay = 253,
-            LastDay
+            first = 0x01,
+            second = 0x08,
+            third = 0x0F,
+            fourth = 0x16,
+            last = 0xFE,
+            secondLast = 0xFD,
+            LastDay = 0xFE
         };
 
-        public byte[] Single_DateTime_as_Byte(int Year, int Month, int Day, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
+        public byte[] Single_DateTime_as_Byte(int Year, int Month, int Day, DaysOfWeek daysOfWeek, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
 
         {
             byte hiYear = BitConverter.GetBytes(Year)[0];
             byte loYear = BitConverter.GetBytes(Year)[1];
             byte month = BitConverter.GetBytes(Month)[0];
             byte DayOfmonth = BitConverter.GetBytes(Day)[0];
-            byte DayOfWeek = BitConverter.GetBytes((int)dateTime.Value.DayOfWeek)[0];
+            byte DayOfWeek = BitConverter.GetBytes((int)daysOfWeek)[0];
             byte Hour_ = BitConverter.GetBytes(Hour)[0];
             byte Minute_ = BitConverter.GetBytes(Minute)[0];
             byte Second_ = BitConverter.GetBytes(Second)[0];
@@ -119,15 +130,27 @@ namespace Gurux.DLMS.Client.Example.Net
             {
                 return new byte[] { loYear, hiYear, month, DayOfmonth, DayOfWeek, Hour_, Minute_, Second_, Millisecond_, hiDeviation, loDeviation, clock };
             }
-        }//.................. not finished
+        }
 
-        public byte[] Every_Month_DateTime_as_Byte(int Day, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
+        public byte[] Every_Month_DateTime_as_Byte(DayOfMonth dayOfMonth, int Day, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
 
         {
             byte hiYear = 0xFF;
             byte loYear = 0xFF;
             byte month = 0xFF;
-            byte DayOfmonth = BitConverter.GetBytes(Day)[0];
+            byte DayOfmonth;
+            if (dayOfMonth == DayOfMonth.LastDay)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)dayOfMonth)[0];
+            }
+            else if (dayOfMonth == DayOfMonth.SecondLastDay)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)dayOfMonth)[0];
+            }
+            else
+            {
+                DayOfmonth = BitConverter.GetBytes(Day)[0];
+            }
             byte DayOfWeek = 0xFF;
             byte Hour_ = BitConverter.GetBytes(Hour)[0];
             byte Minute_ = BitConverter.GetBytes(Minute)[0];
@@ -153,14 +176,63 @@ namespace Gurux.DLMS.Client.Example.Net
             }
         }
 
-        public byte[] Every_Year_DateTime_as_Byte(int Month, int Day, DaysOfWeek dayOfWeek, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
+        public byte[] Every_Year_DateTime_as_Byte(EveryYearEnum everyYear, int Month, int Day, DaysOfWeek dayOfWeek, int Hour, int Minute, int Second, int Millisecond, bool Discard_Date, bool Discard_Time)
 
         {
             byte hiYear = 0xFF;
             byte loYear = 0xFF;
             byte month = BitConverter.GetBytes(Month)[0];
-            byte DayOfmonth = BitConverter.GetBytes(Day)[0];
-            byte DayOfWeek = BitConverter.GetBytes((int)dayOfWeek)[0];
+            byte DayOfmonth;
+            byte DayOfWeek;
+
+            if (everyYear == EveryYearEnum.first)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = BitConverter.GetBytes((int)dayOfWeek)[0];
+            }
+
+            else if (everyYear == EveryYearEnum.second)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = BitConverter.GetBytes((int)dayOfWeek)[0];
+            }
+
+            else if (everyYear == EveryYearEnum.third)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = BitConverter.GetBytes((int)dayOfWeek)[0];
+            }
+
+            else if (everyYear == EveryYearEnum.fourth)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = BitConverter.GetBytes((int)dayOfWeek)[0];
+            }
+
+            else if (everyYear == EveryYearEnum.last)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = BitConverter.GetBytes((int)dayOfWeek)[0];
+            }
+
+            else if (everyYear == EveryYearEnum.secondLast)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = 0xFF;
+            }
+
+            else if (everyYear == EveryYearEnum.LastDay)
+            {
+                DayOfmonth = BitConverter.GetBytes((int)everyYear)[0];
+                DayOfWeek = 0xFF;
+            }
+
+            else
+            {
+                DayOfmonth = BitConverter.GetBytes(Day)[0];
+                DayOfWeek = 0xFF;
+            }
+
             byte Hour_ = BitConverter.GetBytes(Hour)[0];
             byte Minute_ = BitConverter.GetBytes(Minute)[0];
             byte Second_ = BitConverter.GetBytes(Second)[0];
@@ -206,4 +278,6 @@ namespace Gurux.DLMS.Client.Example.Net
         }
 
     }
+
+
 }
