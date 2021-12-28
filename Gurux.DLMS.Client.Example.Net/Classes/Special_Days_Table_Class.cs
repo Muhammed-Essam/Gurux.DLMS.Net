@@ -21,6 +21,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
             get => this.eGReader.Read_Object_Attribute(this.OBIS, 2);
         }
 
+
        
     }
 
