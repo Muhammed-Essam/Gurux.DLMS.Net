@@ -53,19 +53,21 @@ namespace Gurux.DLMS.Client.Example.Net
             
             try
             {
-                Friendly_hours_activity_calendar myreg = new Friendly_hours_activity_calendar(eGReader);
+                //Friendly_Hours_Special_Days myreg = new Friendly_Hours_Special_Days(eGReader);
 
-               // object aaa = myreg.Season_profile_passive;
+                // object aaa = myreg.Season_profile_passive;
 
-                  myreg.Replace_Week_Profile(3, 7, 5, 4, 5, 6, 7, 8);
-                  myreg.Add_Week_Profile(4, 7, 5, 4, 5, 6, 7, 8);
-                  myreg.Add_Week_Profile(5, 7, 5, 4, 5, 6, 7, 8);
-                  myreg.Add_Week_Profile(6, 7, 5, 4, 5, 6, 7, 8);
-                
+                //myreg.Replace_Week_Profile(3, 7, 5, 4, 5, 6, 7, 8);
+                // myreg.Add_Week_Profile(4, 7, 5, 4, 5, 6, 7, 8);
+                // myreg.Add_Week_Profile(5, 7, 5, 4, 5, 6, 7, 8);
+                // myreg.Add_Week_Profile(6, 7, 5, 4, 5, 6, 7, 8);
 
+                //object aaa = myreg.Entries;
+                //myreg.Insert(5, new EGDatetime().Every_Day_DateTime_as_Byte(10, 10, 0, false, true), 1);
 
-
-
+                Import_Credit merna = new Import_Credit(eGReader);
+                object _ = merna.Current_Credit_Amount;
+                Console.WriteLine(_);
 
 
                 MeterReader.Closer(eGReader);

@@ -570,7 +570,7 @@ namespace Gurux.DLMS.Client.Example.Net.Classes
         
         public void Activate_passive_calendar()
         {
-            this.eGReader.Execute_Method_Without_Datatype(this.OBIS, 1, (sbyte)0);
+            this.eGReader.Execute_Method_Without_Datatype_And_AttIndex(this.OBIS, 1, (sbyte)0);
         }
 
         public void Set_season_profile()

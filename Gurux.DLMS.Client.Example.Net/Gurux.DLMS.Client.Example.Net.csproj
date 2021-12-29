@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Classes\Activity_Calendar_Class.cs" />
     <Compile Include="Classes\Credit_Class.cs" />
+    <Compile Include="Classes\Data_Class.cs" />
     <Compile Include="Classes\Demand_Register_Class.cs" />
     <Compile Include="EGDatetime.cs" />
     <Compile Include="Classes\Extended_Register_Class.cs" />

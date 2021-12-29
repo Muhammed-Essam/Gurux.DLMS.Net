@@ -166,7 +166,7 @@ namespace Gurux.DLMS.Client.Example.Net
             reader.ReadDataBlock_Edited(mymethod, reply); 
         }
 
-        public void Execute_Method_Without_Datatype(String OBIS_Code_LN,int methodIndex, object value)
+        public void Execute_Method_Without_Datatype_And_AttIndex(String OBIS_Code_LN,int methodIndex, object value)
         {
             GXDLMSObject myobject = settings.client.Objects.FindByLN(ObjectType.None, OBIS_Code_LN);            
             reader.Method_Without_Datatype(myobject, methodIndex, value);
